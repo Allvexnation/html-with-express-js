@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="animation.css">
+</head>
+<body class="bg-black text-white min-h-screen p-8">
+<div class="grid-bg">
+    <div class="grid-container"></div>
+    <div class="grid-glow" id="gridGlow"></div>
+</div>
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-3xl font-bold mb-8">Dashboard</h1>
+
+    <div class="bg-black/80 border border-white/20 rounded-lg overflow-hidden">
+        <table id="usersTable" class="w-full">
+            <thead>
+                <tr class="border-b border-white/20 bg-white/10">
+                    <th class="text-left py-4 px-6 font-semibold text-white">ID</th>
+                    <th class="text-left py-4 px-6 font-semibold text-white">Email</th>
+                    <th class="text-left py-4 px-6 font-semibold text-white">Created At</th>
+                </tr>
+            </thead>
+            <tbody id="usersBody" class="text-white/80">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="home.js"></script>
+<script src="animation.js"></script>
+</body>
+</html>

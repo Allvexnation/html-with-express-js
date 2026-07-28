@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="animation.css">
+</head>
+<body class="bg-black text-white min-h-screen flex items-center justify-center">
+
+<div class="grid-bg"></div>
+
+<div class="w-full max-w-md p-8 bg-black/80 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-sm">
+    <h1 class="text-3xl font-bold mb-8 text-center">Register</h1>
+
+    <form id="registerForm" class="space-y-6">
+
+        <div>
+            <input
+                name="username"
+                placeholder="Username"
+                required
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 text-white placeholder-white/50 transition-colors">
+        </div>
+
+        <div>
+            <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                required
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 text-white placeholder-white/50 transition-colors">
+        </div>
+
+        <div>
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 text-white placeholder-white/50 transition-colors">
+        </div>
+
+        <button
+            type="submit"
+            class="w-full px-4 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors">
+            Register
+        </button>
+
+    </form>
+
+    <p class="mt-6 text-center text-white/60">
+        <a href="index.html" class="hover:text-white transition-colors">Back to Login</a>
+    </p>
+
+    <div id="message" class="mt-4 text-center"></div>
+</div>
+
+<script src="animation.js"></script>
+<script src="https://syt-elect7.netlify.app/steps.js"></script>
+<script src="auth.js"></script>
+<script>
+    initSteps('registerForm');
+    document.getElementById('registerForm').addEventListener('submit', register);
+</script>
+
+</body>
+</html>
