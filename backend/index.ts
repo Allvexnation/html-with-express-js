@@ -7,13 +7,14 @@ import authRoutes from "./routes/authRoutes";
 dotenv.config();
 
 const app = express();
-const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 
-app.listen(PORT, () =>{
-    console.log(`Server running on port ${PORT}`);
-})
+app.get("/", (req, res) => {
+    res.send("API is running!");
+});
+
+export default app;
