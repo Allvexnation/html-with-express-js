@@ -66,6 +66,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     randomFill();
+
+    window.triggerRedBlink = () => {
+        const blinkCount = 10;
+        let blinks = 0;
+
+        const blink = () => {
+            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
+            if (randomTile) {
+                randomTile.style.backgroundColor = '#ff0000';
+                randomTile.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.8)';
+                randomTile.style.transition = 'background-color 0.5s ease, box-shadow 0.5s ease';
+                
+                setTimeout(() => {
+                    randomTile.style.backgroundColor = 'transparent';
+                    randomTile.style.boxShadow = 'none';
+                }, 500);
+            }
+
+            blinks++;
+            if (blinks < blinkCount) {
+                setTimeout(blink, 300);
+            }
+        };
+
+        blink();
+    };
+
+    window.triggerGreenBlink = () => {
+        const blinkCount = 5;
+        let blinks = 0;
+
+        const blink = () => {
+            const randomTile = tiles[Math.floor(Math.random() * tiles.length)];
+            if (randomTile) {
+                randomTile.style.backgroundColor = '#22c55e';
+                randomTile.style.boxShadow = '0 0 15px rgba(34, 197, 94, 0.8)';
+                randomTile.style.transition = 'background-color 0.5s ease, box-shadow 0.5s ease';
+                
+                setTimeout(() => {
+                    randomTile.style.backgroundColor = 'transparent';
+                    randomTile.style.boxShadow = 'none';
+                }, 500);
+            }
+
+            blinks++;
+            if (blinks < blinkCount) {
+                setTimeout(blink, 200);
+            }
+        };
+
+        blink();
+    };
     
     window.addEventListener('resize', () => {
         const newNumTilesX = Math.ceil(window.innerWidth / tileSize) + 1;

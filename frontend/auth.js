@@ -11,8 +11,31 @@ const API_URL = 'http://localhost:5000/api/auth';
 
 async function register(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    
+    const form = e.target;
+    const inputs = form.querySelectorAll('input');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        if (window.validateField) {
+            if (!validateField(input)) {
+                isValid = false;
+            }
+        } else if (!input.value.trim()) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        return;
+    }
+
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+    const btn = document.getElementById('registerBtn');
+
+    btn.disabled = true;
+    btn.textContent = 'Registering...';
 
     try {
         const res = await fetch(`${API_URL}/register`, {
@@ -31,13 +54,39 @@ async function register(e) {
         }
     } catch (error) {
         alert(error.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Register';
     }
 }
 
 async function login(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    
+    const form = e.target;
+    const inputs = form.querySelectorAll('input');
+    let isValid = true;
+
+    inputs.forEach(input => {
+        if (window.validateField) {
+            if (!validateField(input)) {
+                isValid = false;
+            }
+        } else if (!input.value.trim()) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        return;
+    }
+
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+    const btn = document.getElementById('loginBtn');
+
+    btn.disabled = true;
+    btn.textContent = 'Logging in...';
 
     try {
         const res = await fetch(`${API_URL}/login`, {
@@ -54,5 +103,8 @@ async function login(e) {
         }
     } catch (error) {
         alert(error.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Login';
     }
 }

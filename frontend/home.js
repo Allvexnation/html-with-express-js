@@ -1,5 +1,5 @@
 async function loadUsers() {
-    const response = await fetch('http://localhost:5000/api/auth/users');
+    const response = await fetch('https://jhon-ladines-backend-elec7.onrender.com/api/auth/users');
     const users = await response.json();
 
     const tbody = document.getElementById('usersBody');

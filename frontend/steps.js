@@ -14,6 +14,33 @@ function initSteps(formId) {
     form.querySelectorAll('input').forEach((input, i) => {
         input.parentElement.style.cssText = `transition: all 0.3s ease; opacity: ${i === 0 ? 1 : 0}; transform: ${i === 0 ? 'translateX(0)' : 'translateX(20px)'}; display: ${i === 0 ? 'block' : 'none'}`;
         steps.push(input.parentElement);
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const nextBtn = document.getElementById('nextBtn');
+                const submitBtn = form.querySelector('button[type="submit"]');
+                if (nextBtn && nextBtn.style.display !== 'none') {
+                    nextBtn.click();
+                } else if (submitBtn && submitBtn.style.display !== 'none') {
+                    submitBtn.click();
+                }
+            }
+        });
+
+        input.addEventListener('blur', () => {
+            if (window.validateField) {
+                validateField(input);
+            }
+        });
+
+        input.addEventListener('input', () => {
+            if (window.validateField && input.value.trim()) {
+                validateField(input);
+            } else if (window.resetFieldStyle && !input.value.trim()) {
+                resetFieldStyle(input);
+            }
+        });
     });
 
     form.insertAdjacentHTML('beforeend', `
@@ -31,6 +58,34 @@ function initSteps(formId) {
 function changeStep(dir) {
     const newStep = currentStep + dir;
     if (newStep < 0 || newStep >= steps.length) return;
+
+    if (dir > 0) {
+        const currentInput = steps[currentStep].querySelector('input');
+        if (window.validateField) {
+            const isValid = validateField(currentInput);
+            if (!isValid) {
+                currentInput.focus();
+                return;
+            }
+            if (window.triggerGreenBlink) window.triggerGreenBlink();
+            setTimeout(() => {
+                proceedToStep(dir, newStep);
+            }, 300);
+            return;
+        } else {
+            if (!currentInput.value.trim()) {
+                currentInput.style.borderColor = 'red';
+                currentInput.focus();
+                if (window.triggerRedBlink) window.triggerRedBlink();
+                return;
+            }
+        }
+    }
+
+    proceedToStep(dir, newStep);
+}
+
+function proceedToStep(dir, newStep) {
 
     steps[currentStep].style.opacity = 0;
     steps[currentStep].style.transform = dir > 0 ? 'translateX(-20px)' : 'translateX(20px)';
