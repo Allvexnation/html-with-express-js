@@ -7,11 +7,11 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import 'http://127.0.0.2:5500/frontend/animation.js';
-import 'http://127.0.0.2:5500/frontend/auth.js';
-import 'http://127.0.0.2:5500/frontend/home.js';
-import 'http://127.0.0.2:5500/frontend/steps.js';
-import 'http://127.0.0.2:5500/frontend/validation.js';
+import 'https://jhon-code-elec7.netlify.app/animation.js';
+import 'https://jhon-code-elec7.netlify.app/auth.js';
+import 'https://jhon-code-elec7.netlify.app/home.js';
+import 'https://jhon-code-elec7.netlify.app/steps.js';
+import 'https://jhon-code-elec7.netlify.app/validation.js';
 
 async function init() {
     if (window.initAnimation) window.initAnimation();
