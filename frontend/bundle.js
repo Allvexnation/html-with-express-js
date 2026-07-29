@@ -12,3 +12,27 @@ import 'http://127.0.0.2:5500/frontend/auth.js';
 import 'http://127.0.0.2:5500/frontend/home.js';
 import 'http://127.0.0.2:5500/frontend/steps.js';
 import 'http://127.0.0.2:5500/frontend/validation.js';
+
+async function init() {
+    if (window.initAnimation) window.initAnimation();
+    lucide.createIcons();
+    
+    const registerForm = document.getElementById('registerForm');
+    const loginForm = document.getElementById('loginForm');
+    
+    if (registerForm) {
+        initSteps('registerForm');
+        registerForm.addEventListener('submit', register);
+    }
+    
+    if (loginForm) {
+        initSteps('loginForm');
+        loginForm.addEventListener('submit', login);
+    }
+    
+    if (window.setupEmailValidation) {
+        window.setupEmailValidation();
+    }
+}
+
+init();

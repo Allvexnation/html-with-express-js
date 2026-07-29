@@ -2,6 +2,8 @@ import type {Request, Response} from "express";
 import {supabase} from "../config/supabase";
 import {hashPassword, comparePassword} from "../utils/bcrypt";
 import {createToken} from "../utils/jwt";
+import {sendEmail} from "../config/brevo";
+import {generateSignupEmailTemplate, generateLoginEmailTemplate} from "../templates/emailtemplates";
 
 export async function register(req: Request, res: Response) {
     const {username, email, password} = req.body;
@@ -19,6 +21,14 @@ export async function register(req: Request, res: Response) {
 
       if (error) {
         return res.status(400).json(error);
+      }
+
+      // Send signup email
+      try {
+        const emailContent = generateSignupEmailTemplate({ username, email });
+        await sendEmail(email, username, 'Welcome to Jhon Ladines Portfolio!', emailContent);
+      } catch (emailError) {
+        console.error('Failed to send signup email:', emailError);
       }
 
       res.json(data);
@@ -51,6 +61,14 @@ export async function login(req: Request, res: Response) {
     }
 
     const token = createToken(data.id);
+
+    // Send login notification email
+    try {
+        const emailContent = generateLoginEmailTemplate({ username: data.username, email: data.email });
+        await sendEmail(data.email, data.username, 'Login Notification - Jhon Ladines Portfolio', emailContent);
+    } catch (emailError) {
+        console.error('Failed to send login email:', emailError);
+    }
 
     res.json({
         message: "Login successful",

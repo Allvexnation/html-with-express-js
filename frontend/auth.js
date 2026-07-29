@@ -108,3 +108,6 @@ async function login(e) {
         btn.textContent = 'Login';
     }
 }
+
+window.register = register;
+window.login = login;

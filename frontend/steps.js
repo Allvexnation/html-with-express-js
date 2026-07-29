@@ -55,6 +55,8 @@ function initSteps(formId) {
     form.querySelector('button[type="submit"]').style.display = 'none';
 }
 
+window.initSteps = initSteps;
+
 function changeStep(dir) {
     const newStep = currentStep + dir;
     if (newStep < 0 || newStep >= steps.length) return;

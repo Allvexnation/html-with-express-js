@@ -39,8 +39,12 @@ function validateField(input) {
     }
 
     if (fieldName === 'email') {
+        input.value = input.value.toLowerCase();
+        
+        input.value = input.value.replace(/[^a-z0-9@._-]/g, '');
+        
         const validator = validationRules.email;
-        const isValid = validator(value);
+        const isValid = validator(input.value);
         updateFieldStyle(input, isValid);
         if (!isValid) {
             showError(errorMessages.email);
@@ -97,7 +101,25 @@ function updateFieldStyle(input, isValid) {
         input.style.borderColor = '#22c55e';
         input.style.boxShadow = '0 0 8px rgba(34, 197, 94, 0.5)';
         clearError();
-        if (window.triggerGreenBlink) window.triggerGreenBlink();
+        
+        // Only trigger green blink if all fields in the form are valid
+        const form = input.form;
+        const allInputs = form.querySelectorAll('input');
+        let allValid = true;
+        allInputs.forEach(inp => {
+            if (!inp.value || inp.value.trim() === '') {
+                allValid = false;
+            } else if (inp.name === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(inp.value.trim())) allValid = false;
+            } else if (inp.name === 'username' && inp.value.trim().length < 3) {
+                allValid = false;
+            } else if (inp.name === 'password' && inp.value.trim().length < 6) {
+                allValid = false;
+            }
+        });
+        
+        if (allValid && window.triggerGreenBlink) window.triggerGreenBlink();
     } else {
         input.style.borderColor = '#ef4444';
         input.style.boxShadow = '0 0 8px rgba(239, 68, 68, 0.5)';
@@ -109,3 +131,18 @@ function resetFieldStyle(input) {
     input.style.borderColor = '';
     input.style.boxShadow = '';
 }
+
+window.validateField = validateField;
+window.resetFieldStyle = resetFieldStyle;
+
+function setupEmailValidation() {
+    const emailInputs = document.querySelectorAll('input[name="email"]');
+    emailInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            this.value = this.value.toLowerCase();
+            this.value = this.value.replace(/[^a-z0-9@._-]/g, '');
+        });
+    });
+}
+
+window.setupEmailValidation = setupEmailValidation;

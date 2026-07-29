@@ -7,7 +7,7 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-document.addEventListener('DOMContentLoaded', () => {
+function initAnimation() {
     const gridBg = document.querySelector('.grid-bg');
     const tileSize = 40;
     
@@ -140,4 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAnimation);
+} else {
+    initAnimation();
+}
+
+window.initAnimation = initAnimation;
