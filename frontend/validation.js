@@ -102,7 +102,6 @@ function updateFieldStyle(input, isValid) {
         input.style.boxShadow = '0 0 8px rgba(34, 197, 94, 0.5)';
         clearError();
         
-        // Only trigger green blink if all fields in the form are valid
         const form = input.form;
         const allInputs = form.querySelectorAll('input');
         let allValid = true;

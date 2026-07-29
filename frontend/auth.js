@@ -8,6 +8,7 @@ All rights reserved.
 */
 
 const API_URL = 'http://localhost:5000/api/auth';
+import { setToken } from './token.js';
 
 async function register(e) {
     e.preventDefault();
@@ -96,6 +97,10 @@ async function login(e) {
         });
 
         if (res.ok) {
+            const result = await res.json();
+            if (result.token) {
+                setToken(result.token);
+            }
             window.location.href = 'home.html';
         } else {
             const result = await res.json();
