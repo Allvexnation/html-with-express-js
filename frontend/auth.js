@@ -8,7 +8,7 @@ All rights reserved.
 */
 
 const API_URL = 'https://jhon-ladines-backend-elec7.onrender.com/api/auth';
-import { setToken } from './token.js';
+import { setToken } from 'https://jhon-code-elec7.netlify.app/token.js';
 
 async function register(e) {
     e.preventDefault();

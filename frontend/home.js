@@ -7,7 +7,7 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import { isAuthenticated, removeToken, getToken } from './token.js';
+import { isAuthenticated, removeToken, getToken } from 'https://jhon-code-elec7.netlify.app/token.js';
 
 if (document.getElementById('usersBody') && !isAuthenticated()) {
     window.location.href = 'index.html';
