@@ -1,6 +1,6 @@
 import { getAdmin, adminLogout } from './AdminAuth.js';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
 // Check if admin is logged in

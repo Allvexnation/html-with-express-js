@@ -10,7 +10,7 @@ All rights reserved.
 import { isAuthenticated, removeToken, getToken } from './token.js';
 import { getCurrentUser } from './auth.js';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 
 // Check authentication on page load - redirect to login if not authenticated
 if (!isAuthenticated()) {
@@ -112,7 +112,7 @@ async function loadUsers() {
     if (!tbody) return;
 
     const token = getToken();
-    const response = await fetch('http://localhost:5000/api/auth/users', {
+    const response = await fetch('https://jhon-ladines-server-elec7.onrender.com/api/auth/users', {
         headers: {
             'Authorization': `Bearer ${token}`
         }

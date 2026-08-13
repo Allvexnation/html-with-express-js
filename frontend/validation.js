@@ -85,7 +85,7 @@ export function initValidation() {
             emailError.classList.add('text-blue-500');
             email.classList.remove('border-red-500');
             
-            const response = await fetch(`http://localhost:5000/api/auth/check-email?email=${encodeURIComponent(emailValue)}`);
+            const response = await fetch(`https://jhon-ladines-server-elec7.onrender.com/api/auth/check-email?email=${encodeURIComponent(emailValue)}`);
             const data = await response.json();
             
             console.log('Email check response:', data);
@@ -164,7 +164,7 @@ export function initValidation() {
             usernameError.classList.add('text-blue-500');
             regUsername.classList.remove('border-red-500');
             
-            const response = await fetch(`http://localhost:5000/api/auth/check-username?username=${encodeURIComponent(username)}`);
+            const response = await fetch(`https://jhon-ladines-server-elec7.onrender.com/api/auth/check-username?username=${encodeURIComponent(username)}`);
             const data = await response.json();
             
             console.log('Username check response:', data);
