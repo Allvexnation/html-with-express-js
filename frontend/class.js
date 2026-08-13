@@ -1,0 +1,18 @@
+import { sharedClassMap } from './tailwind-shared.js';
+import { TailwindClass } from './tailwind-init.js';
+
+// Signup-specific class extensions
+const signupClassMap = {
+    'js-label-mb3': 'block text-sm font-medium text-gray-700 mb-3',
+    'js-checkbox': 'w-4 h-4 mt-1 text-blue-600 focus:ring-blue-500',
+    'js-checkbox-no-mt': 'w-4 h-4 text-blue-600 focus:ring-blue-500',
+    'js-form': 'space-y-4',
+    'js-checkbox-label': 'flex items-start cursor-pointer',
+    'js-card': 'bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-5xl flex flex-col md:flex-row',
+    'js-hobbies-grid': 'grid grid-cols-2 gap-2',
+    'js-radio-group': 'flex space-x-6'
+};
+
+const classMap = { ...sharedClassMap, ...signupClassMap };
+
+document.addEventListener('DOMContentLoaded', () => TailwindClass(classMap));

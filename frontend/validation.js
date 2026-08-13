@@ -7,141 +7,238 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-const validationRules = {
-    username: (value) => {
-        return value.trim().length >= 3;
-    },
-    email: (value) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(value.trim());
-    },
-    password: (value) => {
-        return value.trim().length >= 6;
-    }
-};
+export function initValidation() {
+    const cellNumber = document.getElementById('cellNumber');
+    const email = document.getElementById('email');
+    const regUsername = document.getElementById('regUsername');
+    const dateOfBirth = document.getElementById('dateOfBirth');
+    const registrationForm = document.getElementById('registrationForm');
+    const submitButton = registrationForm.querySelector('button[type="submit"]');
 
-const errorMessages = {
-    username: 'Username must be at least 3 characters long',
-    email: 'Please enter a valid email address',
-    password: 'Password must be at least 6 characters long',
-    default: 'This field cannot be empty'
-};
-
-function validateField(input) {
-    const fieldName = input.name;
-    const value = input.value;
-    const formId = input.form.id;
-
-    if (!value || value.trim() === '') {
-        updateFieldStyle(input, false);
-        showError(errorMessages.default);
-        return false;
+    if (!cellNumber || !email || !regUsername || !dateOfBirth || !registrationForm) {
+        console.log('Validation: Required elements not found, skipping initialization');
+        return;
     }
 
-    if (fieldName === 'email') {
-        input.value = input.value.toLowerCase();
+    // Create error labels dynamically
+    const emailError = document.createElement('label');
+    emailError.id = 'emailError';
+    emailError.className = 'text-red-500 text-xs mt-1 hidden';
+    email.parentNode.appendChild(emailError);
+
+    const usernameError = document.createElement('label');
+    usernameError.id = 'usernameError';
+    usernameError.className = 'text-red-500 text-xs mt-1 hidden';
+    regUsername.parentNode.appendChild(usernameError);
+
+    // Set max date for birthday (12 years ago from today)
+    const today = new Date();
+    const minAge = 12;
+    const maxDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
+    const maxDateString = maxDate.toISOString().split('T')[0];
+    dateOfBirth.setAttribute('max', maxDateString);
+
+    // Cell Number: Only numbers allowed
+    cellNumber.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Email: Auto lowercase and validate symbols
+    email.addEventListener('input', function(e) {
+        this.value = this.value.toLowerCase();
+        const value = this.value;
+        const allowedChars = /^[a-z0-9@.]*$/;
         
-        input.value = input.value.replace(/[^a-z0-9@._-]/g, '');
+        if (!allowedChars.test(value)) {
+            this.value = value.replace(/[^a-z0-9@.]/g, '');
+        }
         
-        const validator = validationRules.email;
-        const isValid = validator(input.value);
-        updateFieldStyle(input, isValid);
-        if (!isValid) {
-            showError(errorMessages.email);
+        // Show "validating..." when user is typing a complete email
+        if (value && value.includes('@') && value.includes('.')) {
+            emailError.textContent = 'Validating...';
+            emailError.classList.remove('hidden');
+            emailError.classList.remove('text-red-500');
+            emailError.classList.add('text-blue-500');
+            email.classList.remove('border-red-500');
+            updateSubmitButton();
+        } else {
+            emailError.classList.add('hidden');
+            email.classList.remove('border-red-500');
+            updateSubmitButton();
         }
-        return isValid;
-    }
+    });
 
-    if (formId === 'loginForm') {
-        const isValid = value.trim().length > 0;
-        updateFieldStyle(input, isValid);
-        if (!isValid) {
-            showError(errorMessages.default);
+    // Email: Check if exists when user leaves the field
+    email.addEventListener('blur', function() {
+        const value = this.value.trim();
+        if (value && value.includes('@') && value.includes('.')) {
+            checkEmailExists(value);
         }
-        return isValid;
-    }
+    });
 
-    const validator = validationRules[fieldName];
-
-    if (!validator) {
-        const isValid = value.trim().length > 0;
-        updateFieldStyle(input, isValid);
-        if (!isValid) {
-            showError(errorMessages.default);
-        }
-        return isValid;
-    }
-
-    const isValid = validator(value);
-    updateFieldStyle(input, isValid);
-    if (!isValid) {
-        showError(errorMessages[fieldName] || errorMessages.default);
-    }
-    return isValid;
-}
-
-function showError(message) {
-    const messageDiv = document.getElementById('message');
-    if (messageDiv) {
-        messageDiv.textContent = message;
-        messageDiv.style.color = '#ef4444';
-        messageDiv.style.fontWeight = 'bold';
-    }
-}
-
-function clearError() {
-    const messageDiv = document.getElementById('message');
-    if (messageDiv) {
-        messageDiv.textContent = '';
-    }
-}
-
-function updateFieldStyle(input, isValid) {
-    if (isValid) {
-        input.style.borderColor = '#22c55e';
-        input.style.boxShadow = '0 0 8px rgba(34, 197, 94, 0.5)';
-        clearError();
-        
-        const form = input.form;
-        const allInputs = form.querySelectorAll('input');
-        let allValid = true;
-        allInputs.forEach(inp => {
-            if (!inp.value || inp.value.trim() === '') {
-                allValid = false;
-            } else if (inp.name === 'email') {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(inp.value.trim())) allValid = false;
-            } else if (inp.name === 'username' && inp.value.trim().length < 3) {
-                allValid = false;
-            } else if (inp.name === 'password' && inp.value.trim().length < 6) {
-                allValid = false;
+    async function checkEmailExists(emailValue) {
+        // Call actual backend API
+        try {
+            emailError.textContent = 'Validating...';
+            emailError.classList.remove('hidden');
+            emailError.classList.remove('text-red-500', 'text-green-500');
+            emailError.classList.add('text-blue-500');
+            email.classList.remove('border-red-500');
+            
+            const response = await fetch(`http://localhost:5000/api/auth/check-email?email=${encodeURIComponent(emailValue)}`);
+            const data = await response.json();
+            
+            console.log('Email check response:', data);
+            
+            if (data.exists) {
+                emailError.textContent = 'Email already exists';
+                emailError.classList.remove('hidden');
+                emailError.classList.remove('text-blue-500');
+                emailError.classList.add('text-red-500');
+                email.classList.add('border-red-500');
+                console.log('Email exists - showing error');
+            } else {
+                emailError.textContent = 'Email available';
+                emailError.classList.remove('hidden');
+                emailError.classList.remove('text-red-500');
+                emailError.classList.add('text-green-500');
+                email.classList.remove('border-red-500');
+                console.log('Email does not exist - showing available');
+                
+                // Hide the success message after 2 seconds
+                setTimeout(() => {
+                    emailError.classList.add('hidden');
+                }, 2000);
             }
-        });
-        
-        if (allValid && window.triggerGreenBlink) window.triggerGreenBlink();
-    } else {
-        input.style.borderColor = '#ef4444';
-        input.style.boxShadow = '0 0 8px rgba(239, 68, 68, 0.5)';
-        if (window.triggerRedBlink) window.triggerRedBlink();
+        } catch (error) {
+            console.error('Error checking email:', error);
+            emailError.textContent = 'Error checking email';
+            emailError.classList.remove('hidden');
+            emailError.classList.remove('text-blue-500', 'text-green-500');
+            emailError.classList.add('text-red-500');
+        }
+        updateSubmitButton();
     }
-}
+    
+    // Expose function globally for steps.js
+    window.checkEmailExists = checkEmailExists;
 
-function resetFieldStyle(input) {
-    input.style.borderColor = '';
-    input.style.boxShadow = '';
-}
+    // Username: Allow only letters, numbers, underscore, and dot
+    regUsername.addEventListener('input', function(e) {
+        const value = this.value;
+        const allowedChars = /^[a-zA-Z0-9_.]*$/;
+        
+        if (!allowedChars.test(value)) {
+            this.value = value.replace(/[^a-zA-Z0-9_.]/g, '');
+        }
+        
+        // Show "validating..." when user types 3+ characters
+        if (value.length >= 3) {
+            usernameError.textContent = 'Validating...';
+            usernameError.classList.remove('hidden');
+            usernameError.classList.remove('text-red-500');
+            usernameError.classList.add('text-blue-500');
+            regUsername.classList.remove('border-red-500');
+            updateSubmitButton();
+        } else {
+            usernameError.classList.add('hidden');
+            regUsername.classList.remove('border-red-500');
+            updateSubmitButton();
+        }
+    });
 
-window.validateField = validateField;
-window.resetFieldStyle = resetFieldStyle;
+    // Username: Check if exists when user leaves the field
+    regUsername.addEventListener('blur', function() {
+        const value = this.value.trim();
+        if (value.length >= 3) {
+            checkUsernameExists(value);
+        }
+    });
 
-function setupEmailValidation() {
-    const emailInputs = document.querySelectorAll('input[name="email"]');
-    emailInputs.forEach(input => {
-        input.addEventListener('input', function() {
-            this.value = this.value.toLowerCase();
-            this.value = this.value.replace(/[^a-z0-9@._-]/g, '');
-        });
+    async function checkUsernameExists(username) {
+        // Call actual backend API
+        try {
+            usernameError.textContent = 'Validating...';
+            usernameError.classList.remove('hidden');
+            usernameError.classList.remove('text-red-500', 'text-green-500');
+            usernameError.classList.add('text-blue-500');
+            regUsername.classList.remove('border-red-500');
+            
+            const response = await fetch(`http://localhost:5000/api/auth/check-username?username=${encodeURIComponent(username)}`);
+            const data = await response.json();
+            
+            console.log('Username check response:', data);
+            
+            if (data.exists) {
+                usernameError.textContent = 'Username already exists';
+                usernameError.classList.remove('hidden');
+                usernameError.classList.remove('text-blue-500');
+                usernameError.classList.add('text-red-500');
+                regUsername.classList.add('border-red-500');
+                console.log('Username exists - showing error');
+            } else {
+                usernameError.textContent = 'Username available';
+                usernameError.classList.remove('hidden');
+                usernameError.classList.remove('text-red-500');
+                usernameError.classList.add('text-green-500');
+                regUsername.classList.remove('border-red-500');
+                console.log('Username does not exist - showing available');
+                
+                // Hide the success message after 2 seconds
+                setTimeout(() => {
+                    usernameError.classList.add('hidden');
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error checking username:', error);
+            usernameError.textContent = 'Error checking username';
+            usernameError.classList.remove('hidden');
+            usernameError.classList.remove('text-blue-500', 'text-green-500');
+            usernameError.classList.add('text-red-500');
+        }
+        updateSubmitButton();
+    }
+    
+    // Expose function globally for steps.js
+    window.checkUsernameExists = checkUsernameExists;
+
+    // Function to update submit button state
+    function updateSubmitButton() {
+        const hasEmailError = !emailError.classList.contains('hidden');
+        const hasUsernameError = !usernameError.classList.contains('hidden');
+        
+        if (hasEmailError || hasUsernameError) {
+            submitButton.disabled = true;
+            submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+        } else {
+            submitButton.disabled = false;
+            submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+    }
+
+    // Form submission validation
+    registrationForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate email before submission
+        const emailValue = email.value.trim();
+        if (emailValue && emailValue.includes('@') && emailValue.includes('.')) {
+            checkEmailExists(emailValue);
+        }
+        
+        // Validate username before submission
+        const usernameValue = regUsername.value.trim();
+        if (usernameValue.length >= 3) {
+            checkUsernameExists(usernameValue);
+        }
+        
+        // Check if email or username has errors after validation
+        setTimeout(() => {
+            if (!emailError.classList.contains('hidden') || !usernameError.classList.contains('hidden')) {
+                return;
+            }
+            // If no errors, submit the form
+            registrationForm.submit();
+        }, 100);
     });
 }
-
-window.setupEmailValidation = setupEmailValidation;

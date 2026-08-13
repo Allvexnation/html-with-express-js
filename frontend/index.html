@@ -2,76 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="animation.css">
 </head>
-<body class="bg-black text-white min-h-screen flex items-center justify-center">
-
-<div class="grid-bg"></div>
-
-<main class="w-full max-w-md p-8 bg-black/80 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-sm">
-    <h1 class="text-3xl font-bold mb-8 text-center">Login</h1>
-
-    <form id="loginForm" class="space-y-6">
-
-        <div>
-            <label for="email" class="sr-only">Email</label>
-            <input
-                type="text"
-                id="email"
-                name="email"
-                placeholder="Email"
-                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 text-white placeholder-white/50 transition-colors">
-        </div>
-
-        <div class="relative">
-            <label for="password" class="sr-only">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                class="w-full px-4 py-3 pr-12 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 text-white placeholder-white/50 transition-colors">
-            <button type="button" onclick="togglePassword('password')" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors">
-                <i data-lucide="eye" id="password-icon" class="w-5 h-5"></i>
-            </button>
-        </div>
-
-        <button
-            type="submit"
-            id="loginBtn"
-            class="w-full px-4 py-3 bg-white text-black font-semibold rounded-lg hover:bg-white/90 transition-colors">
-            Login
-        </button>
-
-    </form>
-
-    <p class="mt-6 text-center text-white/60">
-        <a href="signup.html" class="hover:text-white transition-colors">Create Account</a>
-    </p>
-
-    <div id="message" class="mt-4 text-center" role="alert" aria-live="polite"></div>
-</main>
-
-<script type="module" src="script.js"></script>
-
-<script>
-    function togglePassword(inputId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(inputId + '-icon');
+<body class="js-body">
+    <main class="js-card">
+        <aside class="js-left-panel" style="background-image: url('https://res.cloudinary.com/dbob1wota/image/upload/images_3_yg87hg.jpg');">
+        </aside>
         
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.setAttribute('data-lucide', 'eye-off');
-        } else {
-            input.type = 'password';
-            icon.setAttribute('data-lucide', 'eye');
-        }
-        lucide.createIcons();
-    }
-</script>
+        <section class="js-right-panel">
+            <h1 class="js-heading">LOGIN FORM</h1>
+            <p class="js-subheading">Enter your credentials to access your account</p>
+            
+            <form id="loginForm" class="js-form">
+                <div class="js-form-group">
+                    <label for="username" class="js-label">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required
+                        class="js-input"
+                        placeholder="Enter your username"
+                    >
+                </div>
+                
+                <div class="js-form-group">
+                    <label for="password" class="js-label">Password</label>
+                    <div class="js-relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required
+                            class="js-input-toggle"
+                            placeholder="Enter your password"
+                        >
+                        <button type="button" id="togglePasswordBtn" class="js-btn-toggle">
+                            <i data-lucide="eye-off" id="password-eye" class="js-icon"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button 
+                    type="submit"
+                    id="loginBtn"
+                    class="js-btn-primary"
+                >
+                    Login
+                </button>
+            </form>
+            
+            <footer class="mt-6 text-center">
+                <p class="text-gray-600 text-sm">
+                    Don't have an Account? 
+                    <a href="signup.html" class="js-link">
+                        Register Here!
+                    </a>
+                </p>
+            </footer>
+        </section>
+    </main>
 
+    <script type="module" src="tailwind-login.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>

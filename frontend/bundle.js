@@ -7,32 +7,25 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import 'https://jhon-code-elec7.netlify.app/animation.js';
-import 'https://jhon-code-elec7.netlify.app/auth.js';
-import 'https://jhon-code-elec7.netlify.app/home.js';
-import 'https://jhon-code-elec7.netlify.app/steps.js';
-import 'https://jhon-code-elec7.netlify.app/validation.js';
+import { initSteps } from './steps.js';
+import { initAuth } from './auth.js';
+import { initValidation } from './validation.js';
 
 async function init() {
     if (window.initAnimation) window.initAnimation();
-    lucide.createIcons();
     
-    const registerForm = document.getElementById('registerForm');
-    const loginForm = document.getElementById('loginForm');
+    const registrationForm = document.getElementById('registrationForm');
     
-    if (registerForm) {
-        initSteps('registerForm');
-        registerForm.addEventListener('submit', register);
+    if (registrationForm) {
+        initSteps('registrationForm');
+        initValidation();
     }
     
-    if (loginForm) {
-        initSteps('loginForm');
-        loginForm.addEventListener('submit', login);
-    }
-    
-    if (window.setupEmailValidation) {
-        window.setupEmailValidation();
-    }
+    initAuth();
 }
 
-init();
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    init();
+} else {
+    document.addEventListener('DOMContentLoaded', init);
+}
