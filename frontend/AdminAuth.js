@@ -1,13 +1,13 @@
 /*
 Developer: Jhon Ladines
 Website: https://www.jhonladines.top/
-Copyright © 2026 Jhon Ladines
+Copyright 2026 Jhon Ladines
 This script is from ELEC 07 for school purposes
 Made by Jhon Ladines
 All rights reserved.
 */
 
-import 'https://jhon-code-elec7.netlify.app/adminlogin-animation.js';
+import { animateLoginCard } from './adminlogin-animation.js';
 
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
@@ -159,6 +159,7 @@ export function adminLogout() {
 
 if (window.location.pathname.includes('AdminLogin.html')) {
     render();
+    animateLoginCard();
 }
 
 document.addEventListener('DOMContentLoaded', function () {

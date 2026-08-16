@@ -6,7 +6,7 @@ This script is from ELEC 07 for school purposes
 Made by Jhon Ladines
 All rights reserved.
 */
-document.addEventListener('DOMContentLoaded', function() {
+export function animateLoginCard() {
     const card = document.querySelector('main');
     if (card) {
         card.style.opacity = '0';
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
             adminSubtitle.style.transform = 'translateY(0)';
         }, 600);
     }
-});
+}
 
 export function animateProfileShow(profileElement) {
     if (!profileElement) return;
