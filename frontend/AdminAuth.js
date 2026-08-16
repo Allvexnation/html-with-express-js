@@ -159,7 +159,7 @@ export function adminLogout() {
 
 if (window.location.pathname.includes('AdminLogin.html')) {
     render();
-    animateLoginCard();
+    // animateLoginCard();
 }
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -16,6 +16,8 @@ export function animateLoginCard() {
             card.style.opacity = '1';
             card.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
         }, 100);
+    } else {
+        console.error('Card element not found for animation');
     }
 
     const leftPanel = document.querySelector('aside');
