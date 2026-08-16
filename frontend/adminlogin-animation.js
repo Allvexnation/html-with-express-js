@@ -7,7 +7,7 @@ Made by Jhon Ladines
 All rights reserved.
 */
 document.addEventListener('DOMContentLoaded', function() {
-    const card = document.querySelector('.js-card');
+    const card = document.querySelector('main');
     if (card) {
         card.style.opacity = '0';
         card.style.transform = 'translateY(100px) scale(0.8) rotateX(20deg)';
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    const leftPanel = document.querySelector('.js-left-panel');
+    const leftPanel = document.querySelector('aside');
     if (leftPanel) {
         leftPanel.style.opacity = '0';
         leftPanel.style.transition = 'opacity 1s ease-out';
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 300);
     }
 
-    const rightPanel = document.querySelector('.js-right-panel');
+    const rightPanel = document.querySelector('section');
     if (rightPanel) {
         rightPanel.style.opacity = '0';
         rightPanel.style.transform = 'translateX(50px)';
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 400);
     }
 
-    const heading = document.querySelector('.js-heading');
+    const heading = document.querySelector('section h1');
     if (heading) {
         heading.style.opacity = '0';
         heading.style.transform = 'scale(0) rotate(-10deg)';
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
     }
 
-    const subheading = document.querySelector('.js-subheading');
+    const subheading = document.querySelector('section p.mb-8');
     if (subheading) {
         subheading.style.opacity = '0';
         subheading.style.transform = 'translateX(-30px)';
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 600);
     }
 
-    const formGroups = document.querySelectorAll('.js-form-group, .form-group');
+    const formGroups = document.querySelectorAll('form .mb-4');
     formGroups.forEach((group, index) => {
         group.style.opacity = '0';
         group.style.transform = 'translateY(30px) rotate(-5deg) scale(0.9)';
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 700 + (index * 100));
     });
 
-    const primaryBtn = document.querySelector('.js-btn-primary');
+    const primaryBtn = document.querySelector('form button[type="submit"]');
     if (primaryBtn) {
         primaryBtn.style.opacity = '0';
         primaryBtn.style.transform = 'scale(0) translateY(20px)';
@@ -95,29 +95,55 @@ document.addEventListener('DOMContentLoaded', function() {
             footer.style.transform = 'translateY(0)';
         }, 700 + (formGroups.length * 100) + 200);
     }
+
+    const shieldIcon = document.querySelector('aside .text-center i[data-lucide="shield"]');
+    if (shieldIcon) {
+        shieldIcon.style.opacity = '0';
+        shieldIcon.style.transform = 'scale(0) rotate(-180deg)';
+        shieldIcon.style.transition = 'opacity 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            shieldIcon.style.opacity = '0.9';
+            shieldIcon.style.transform = 'scale(1) rotate(0deg)';
+            setTimeout(() => {
+                shieldIcon.style.animation = 'pulse 2s infinite';
+            }, 500);
+        }, 200);
+    }
+
+    const adminHeading = document.querySelector('aside .text-center h2.text-3xl');
+    if (adminHeading) {
+        adminHeading.style.opacity = '0';
+        adminHeading.style.transform = 'translateY(-30px) scale(0.8)';
+        adminHeading.style.transition = 'opacity 0.5s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            adminHeading.style.opacity = '1';
+            adminHeading.style.transform = 'translateY(0) scale(1)';
+        }, 400);
+    }
+
+    const adminSubtitle = document.querySelector('aside .text-center p.text-blue-100');
+    if (adminSubtitle) {
+        adminSubtitle.style.opacity = '0';
+        adminSubtitle.style.transform = 'translateY(20px)';
+        adminSubtitle.style.transition = 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            adminSubtitle.style.opacity = '1';
+            adminSubtitle.style.transform = 'translateY(0)';
+        }, 600);
+    }
 });
 
 export function animateProfileShow(profileElement) {
     if (!profileElement) return;
     
-    const blurOverlay = document.getElementById('blurOverlay');
-    if (blurOverlay) {
-        blurOverlay.classList.remove('hidden');
-        blurOverlay.style.opacity = '0';
-        blurOverlay.style.transition = 'opacity 0.5s ease-out';
-        setTimeout(() => {
-            blurOverlay.style.opacity = '1';
-        }, 50);
-    }
-    
     profileElement.style.opacity = '0';
-    profileElement.style.transform = 'scale(0.5) translateY(-30px)';
+    profileElement.style.transform = 'scale(0.5) translateY(-30px) rotate(-10deg)';
     profileElement.style.transition = 'opacity 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
     
     profileElement.offsetHeight;
     
     profileElement.style.opacity = '1';
-    profileElement.style.transform = 'scale(1) translateY(0)';
+    profileElement.style.transform = 'scale(1) translateY(0) rotate(0deg)';
     
     const profileImage = profileElement.querySelector('#profileImage');
     const defaultAvatar = profileElement.querySelector('#defaultAvatar');
@@ -161,12 +187,6 @@ export function animateProfileHide(profileElement, callback) {
         return;
     }
     
-    const blurOverlay = document.getElementById('blurOverlay');
-    if (blurOverlay) {
-        blurOverlay.style.opacity = '0';
-        blurOverlay.style.transition = 'opacity 0.4s ease-out';
-    }
-    
     profileElement.style.transition = 'opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
     profileElement.style.opacity = '0';
     profileElement.style.transform = 'scale(0.8) translateY(20px) rotate(5deg)';
@@ -191,9 +211,6 @@ export function animateProfileHide(profileElement, callback) {
     }
     
     setTimeout(() => {
-        if (blurOverlay) {
-            blurOverlay.classList.add('hidden');
-        }
         if (callback) callback();
     }, 500);
 }

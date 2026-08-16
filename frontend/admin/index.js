@@ -1,29 +1,34 @@
+/*
+Developer: Jhon Ladines
+Website: https://www.jhonladines.top/
+Copyright © 2026 Jhon Ladines
+This script is from ELEC 07 for school purposes
+Made by Jhon Ladines
+All rights reserved.
+*/
+
 import { getAdmin, adminLogout } from '../admin-login/index.js';
+import { animatePageTransition, animateNavLinks, animateCardHover, animateButtons, animateModalShow, animateModalHide, animateProfileShow, animateProfileHide, refreshAnimations, animateTables, animateTableRowsDomino } from '../admin-animation.js';
 
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
-// Check if admin is logged in
 const admin = getAdmin();
 if (!admin) {
     window.location.href = 'AdminLogin.html';
 }
 
-// State for page switching
 let currentPage = 'dashboard';
 
-// Data state
 let studentsData = [];
 let subjectsData = [];
 let enrollmentsData = [];
 let gradesData = [];
 
-// Set current date
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 const today = new Date();
 const dateString = today.toLocaleDateString('en-US', options);
 
-// Upload image to Cloudinary via backend
 export async function uploadImageToCloudinary(file) {
     const formData = new FormData();
     formData.append('file', file);
@@ -43,7 +48,6 @@ export async function uploadImageToCloudinary(file) {
     }
 }
 
-// API Functions
 export async function getStudents() {
     try {
         const response = await fetch(`${API_BASE}/admin/students`);
@@ -223,7 +227,6 @@ export async function getEnrollmentsByStudent(studentId) {
     }
 }
 
-// Page content templates
 function getDashboardContent() {
     const name = admin.username || 'Admin';
     const hour = new Date().getHours();
@@ -237,7 +240,6 @@ function getDashboardContent() {
     const gradesCount = gradesData.length || 0;
 
     return `
-        <!-- Welcome Card -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
             <h1 class="text-3xl font-bold mb-2" id="greeting">${timeGreeting}, ${name}! 👋</h1>
             <p class="text-blue-100 mb-6" id="currentDate">${dateString}</p>
@@ -253,7 +255,6 @@ function getDashboardContent() {
             </div>
         </div>
 
-        <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
                 <div class="bg-blue-100 p-4 rounded-full">
@@ -293,7 +294,6 @@ function getDashboardContent() {
             </div>
         </div>
 
-        <!-- Quick Access -->
         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
             <i class="fas fa-bolt text-yellow-500 mr-2"></i>
             Quick Access
@@ -586,18 +586,15 @@ function getGradesContent() {
     `;
 }
 
-// Render function
 function render() {
     const header = `
         <header class="bg-blue-900 text-white shadow-lg">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-                <!-- Logo -->
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-graduation-cap text-2xl"></i>
                     <span class="font-bold text-lg">CRT COLLEGE LMS | SJ - Admin</span>
                 </div>
 
-                <!-- Navigation -->
                 <nav class="hidden md:flex items-center space-x-6">
                     <a href="#" onclick="switchPage('dashboard')" class="nav-link flex items-center space-x-2 ${currentPage === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="dashboard">
                         <i class="fas fa-home"></i>
@@ -621,7 +618,6 @@ function render() {
                     </a>
                 </nav>
 
-                <!-- Right Icons -->
                 <div class="flex items-center space-x-4">
                     <button class="hover:bg-blue-800 p-2 rounded-lg transition">
                         <i class="fas fa-calendar text-xl"></i>
@@ -659,7 +655,6 @@ function render() {
     `;
 
     const modals = `
-        <!-- Subject Modal -->
         <div id="subjectModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
             <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Add Subject</h3>
@@ -700,7 +695,6 @@ function render() {
             </div>
         </div>
 
-        <!-- Grade Modal -->
         <div id="gradeModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
             <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Add New Grade</h3>
@@ -737,7 +731,6 @@ function render() {
             </div>
         </div>
 
-        <!-- Enrollment Modal -->
         <div id="enrollmentModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
             <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
                 <h3 class="text-xl font-bold text-gray-800 mb-4">Enroll Student in Subjects</h3>
@@ -751,7 +744,6 @@ function render() {
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Subjects (Select multiple)</label>
                         <div id="enrollmentSubjects" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent max-h-40 overflow-y-auto">
-                            <!-- Checkboxes will be populated here -->
                         </div>
                     </div>
                     <div>
@@ -775,7 +767,6 @@ function render() {
             </div>
         </div>
 
-        <!-- Student Grades Modal -->
         <div id="studentGradesModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
             <div class="bg-white rounded-xl p-6 w-full max-w-2xl mx-4 max-h-[80vh] overflow-y-auto">
                 <div class="flex justify-between items-center mb-4">
@@ -794,27 +785,38 @@ function render() {
     `;
 
     root.innerHTML = header + main + modals;
+    
+    setTimeout(() => {
+        animateNavLinks();
+        animateCardHover();
+        animateButtons();
+    }, 100);
 }
 
-// Switch page function
 window.switchPage = function(page) {
     currentPage = page;
     render();
     
-    // Load data for the selected page
+    setTimeout(() => {
+        const pageElement = document.querySelector('.page-content:not(.hidden)');
+        if (pageElement) {
+            animatePageTransition(pageElement);
+        }
+        
+        refreshAnimations();
+    }, 50);
+    
     if (page === 'students') loadStudents();
     if (page === 'subjects') loadSubjects();
     if (page === 'enrollments') loadEnrollments();
     if (page === 'grades') loadGrades();
 };
 
-// Logout function
 window.logout = function() {
     adminLogout();
     window.location.href = 'AdminLogin.html';
 };
 
-// Show user profile modal
 function showUserProfile() {
     if (!admin) {
         alert('No admin information available');
@@ -859,35 +861,71 @@ function showUserProfile() {
     `;
 
     modal.style.display = 'flex';
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateProfileShow(modalContent);
+    }
 }
 
 function closeUserProfile() {
     const modal = document.getElementById('userProfileModal');
     if (modal) {
-        modal.style.display = 'none';
+        const modalContent = modal.querySelector('.bg-white');
+        if (modalContent) {
+            animateProfileHide(modalContent, () => {
+                modal.style.display = 'none';
+            });
+        } else {
+            modal.style.display = 'none';
+        }
     }
 }
 
 window.showUserProfile = showUserProfile;
 window.closeUserProfile = closeUserProfile;
 
-// Modal functions
 window.openSubjectModal = function() {
-    document.getElementById('subjectModal').classList.remove('hidden');
-    document.getElementById('subjectModal').classList.add('flex');
+    const modal = document.getElementById('subjectModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateModalShow(modalContent);
+    }
 };
 
 window.closeSubjectModal = function() {
-    document.getElementById('subjectModal').classList.add('hidden');
-    document.getElementById('subjectModal').classList.remove('flex');
-    document.getElementById('subjectForm').reset();
-    document.getElementById('coverPhotoUrl').value = '';
-    document.getElementById('coverPhotoPreview').classList.add('hidden');
+    const modal = document.getElementById('subjectModal');
+    const modalContent = modal.querySelector('.bg-white');
+    
+    if (modalContent) {
+        animateModalHide(modalContent, () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('subjectForm').reset();
+            document.getElementById('coverPhotoUrl').value = '';
+            document.getElementById('coverPhotoPreview').classList.add('hidden');
+        });
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.getElementById('subjectForm').reset();
+        document.getElementById('coverPhotoUrl').value = '';
+        document.getElementById('coverPhotoPreview').classList.add('hidden');
+    }
 };
 
 window.openGradeModal = async function() {
-    document.getElementById('gradeModal').classList.remove('hidden');
-    document.getElementById('gradeModal').classList.add('flex');
+    const modal = document.getElementById('gradeModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateModalShow(modalContent);
+    }
     
     const studentsResult = await getStudents();
     const subjectsResult = await getSubjects();
@@ -907,14 +945,31 @@ window.openGradeModal = async function() {
 };
 
 window.closeGradeModal = function() {
-    document.getElementById('gradeModal').classList.add('hidden');
-    document.getElementById('gradeModal').classList.remove('flex');
-    document.getElementById('gradeForm').reset();
+    const modal = document.getElementById('gradeModal');
+    const modalContent = modal.querySelector('.bg-white');
+    
+    if (modalContent) {
+        animateModalHide(modalContent, () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('gradeForm').reset();
+        });
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.getElementById('gradeForm').reset();
+    }
 };
 
 window.viewStudentGrades = async function(studentId, studentName) {
-    document.getElementById('studentGradesModal').classList.remove('hidden');
-    document.getElementById('studentGradesModal').classList.add('flex');
+    const modal = document.getElementById('studentGradesModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateModalShow(modalContent);
+    }
     
     const content = document.getElementById('studentGradesContent');
     content.innerHTML = '<p class="text-gray-500">Loading grades...</p>';
@@ -949,13 +1004,29 @@ window.viewStudentGrades = async function(studentId, studentName) {
 };
 
 window.closeStudentGradesModal = function() {
-    document.getElementById('studentGradesModal').classList.add('hidden');
-    document.getElementById('studentGradesModal').classList.remove('flex');
+    const modal = document.getElementById('studentGradesModal');
+    const modalContent = modal.querySelector('.bg-white');
+    
+    if (modalContent) {
+        animateModalHide(modalContent, () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        });
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
 };
 
 window.openEnrollmentModal = async function() {
-    document.getElementById('enrollmentModal').classList.remove('hidden');
-    document.getElementById('enrollmentModal').classList.add('flex');
+    const modal = document.getElementById('enrollmentModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateModalShow(modalContent);
+    }
     
     const studentsResult = await getStudents();
     const subjectsResult = await getSubjects();
@@ -979,9 +1050,20 @@ window.openEnrollmentModal = async function() {
 };
 
 window.closeEnrollmentModal = function() {
-    document.getElementById('enrollmentModal').classList.add('hidden');
-    document.getElementById('enrollmentModal').classList.remove('flex');
-    document.getElementById('enrollmentForm').reset();
+    const modal = document.getElementById('enrollmentModal');
+    const modalContent = modal.querySelector('.bg-white');
+    
+    if (modalContent) {
+        animateModalHide(modalContent, () => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('enrollmentForm').reset();
+        });
+    } else {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.getElementById('enrollmentForm').reset();
+    }
 };
 
 window.editEnrollment = async function(enrollmentId) {
@@ -992,8 +1074,14 @@ window.editEnrollment = async function(enrollmentId) {
         return;
     }
 
-    document.getElementById('enrollmentModal').classList.remove('hidden');
-    document.getElementById('enrollmentModal').classList.add('flex');
+    const modal = document.getElementById('enrollmentModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateModalShow(modalContent);
+    }
     
     const studentsResult = await getStudents();
     const subjectsResult = await getSubjects();
@@ -1076,7 +1164,6 @@ window.deleteEnrollmentById = async function(enrollmentId) {
     }
 };
 
-// Load data functions
 async function loadDashboardData() {
     const studentsResult = await getStudents();
     if (studentsResult.success && studentsResult.data) {
@@ -1099,6 +1186,10 @@ async function loadDashboardData() {
     }
 
     render();
+    
+    setTimeout(() => {
+        refreshAnimations();
+    }, 100);
 }
 
 async function loadStudents() {
@@ -1106,6 +1197,11 @@ async function loadStudents() {
     if (result.success && result.data) {
         studentsData = result.data;
         render();
+        setTimeout(() => {
+            animateTables();
+            animateTableRowsDomino();
+            refreshAnimations();
+        }, 100);
     }
 }
 
@@ -1114,6 +1210,11 @@ async function loadSubjects() {
     if (result.success && result.data) {
         subjectsData = result.data;
         render();
+        setTimeout(() => {
+            animateTables();
+            animateTableRowsDomino();
+            refreshAnimations();
+        }, 100);
     }
 }
 
@@ -1122,6 +1223,11 @@ async function loadEnrollments() {
     if (result.success && result.data) {
         enrollmentsData = result.data;
         render();
+        setTimeout(() => {
+            animateTables();
+            animateTableRowsDomino();
+            refreshAnimations();
+        }, 100);
     }
 }
 
@@ -1130,12 +1236,15 @@ async function loadGrades() {
     if (result.success) {
         gradesData = result.data || [];
         render();
+        setTimeout(() => {
+            animateTables();
+            animateTableRowsDomino();
+            refreshAnimations();
+        }, 100);
     }
 }
 
-// Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle file input change for preview
     document.addEventListener('change', function(e) {
         if (e.target.id === 'coverPhotoFile') {
             const file = e.target.files[0];
@@ -1152,7 +1261,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Subject form submission
     document.addEventListener('submit', async function(e) {
         if (e.target.id === 'subjectForm') {
             e.preventDefault();
@@ -1251,5 +1359,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Initial load
 loadDashboardData();

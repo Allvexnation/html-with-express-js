@@ -1,16 +1,22 @@
+/*
+Developer: Jhon Ladines
+Website: https://www.jhonladines.top/
+Copyright © 2026 Jhon Ladines
+This script is from ELEC 07 for school purposes
+Made by Jhon Ladines
+All rights reserved.
+*/
+
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
-// Check if admin is already logged in (only on login page)
 if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggedIn()) {
     window.location.href = 'AdminDashboard.html';
 }
 
-// Render login page
 function render() {
     root.innerHTML = `
         <div class="bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row">
-            <!-- Left Side - Image -->
             <div class="md:w-1/2 bg-gradient-to-br from-purple-600 to-indigo-800 flex items-center justify-center p-8">
                 <div class="text-center text-white">
                     <div class="mb-6">
@@ -23,7 +29,6 @@ function render() {
                 </div>
             </div>
             
-            <!-- Right Side - Form -->
             <div class="md:w-1/2 p-8 md:p-12">
                 <h1 class="text-2xl font-bold text-gray-900 mb-2">ADMIN LOGIN</h1>
                 <p class="text-gray-600 mb-8">Enter your credentials to access the admin dashboard</p>
@@ -82,7 +87,6 @@ function render() {
     `;
 }
 
-// Toggle password visibility
 window.togglePassword = function(fieldId) {
     const field = document.getElementById(fieldId);
     const eyeIcon = document.getElementById(fieldId + '-eye');
@@ -101,7 +105,6 @@ window.togglePassword = function(fieldId) {
     }
 };
 
-// API Functions
 export async function adminLogin(usernameOrEmail, password) {
     try {
         const response = await fetch(`${API_BASE}/admin/login`, {
@@ -115,7 +118,6 @@ export async function adminLogin(usernameOrEmail, password) {
         const data = await response.json();
 
         if (response.ok) {
-            // Store admin data in localStorage
             localStorage.setItem('admin', JSON.stringify(data.admin));
             localStorage.setItem('adminToken', data.token);
             return { success: true, data };
@@ -146,12 +148,10 @@ export function adminLogout() {
     window.location.href = 'AdminLogin.html';
 }
 
-// Initialize (only on login page)
 if (window.location.pathname.includes('AdminLogin.html')) {
     render();
 }
 
-// Form submission handler
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('submit', async function(e) {
         if (e.target.id === 'adminLoginForm') {

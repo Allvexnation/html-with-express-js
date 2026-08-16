@@ -20,7 +20,6 @@ export function initValidation() {
         return;
     }
 
-    // Create error labels dynamically
     const emailError = document.createElement('label');
     emailError.id = 'emailError';
     emailError.className = 'text-red-500 text-xs mt-1 hidden';
@@ -31,19 +30,16 @@ export function initValidation() {
     usernameError.className = 'text-red-500 text-xs mt-1 hidden';
     regUsername.parentNode.appendChild(usernameError);
 
-    // Set max date for birthday (12 years ago from today)
     const today = new Date();
     const minAge = 12;
     const maxDate = new Date(today.getFullYear() - minAge, today.getMonth(), today.getDate());
     const maxDateString = maxDate.toISOString().split('T')[0];
     dateOfBirth.setAttribute('max', maxDateString);
 
-    // Cell Number: Only numbers allowed
     cellNumber.addEventListener('input', function(e) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 
-    // Email: Auto lowercase and validate symbols
     email.addEventListener('input', function(e) {
         this.value = this.value.toLowerCase();
         const value = this.value;
@@ -53,7 +49,6 @@ export function initValidation() {
             this.value = value.replace(/[^a-z0-9@.]/g, '');
         }
         
-        // Show "validating..." when user is typing a complete email
         if (value && value.includes('@') && value.includes('.')) {
             emailError.textContent = 'Validating...';
             emailError.classList.remove('hidden');
@@ -68,7 +63,6 @@ export function initValidation() {
         }
     });
 
-    // Email: Check if exists when user leaves the field
     email.addEventListener('blur', function() {
         const value = this.value.trim();
         if (value && value.includes('@') && value.includes('.')) {
@@ -77,7 +71,6 @@ export function initValidation() {
     });
 
     async function checkEmailExists(emailValue) {
-        // Call actual backend API
         try {
             emailError.textContent = 'Validating...';
             emailError.classList.remove('hidden');
@@ -105,7 +98,6 @@ export function initValidation() {
                 email.classList.remove('border-red-500');
                 console.log('Email does not exist - showing available');
                 
-                // Hide the success message after 2 seconds
                 setTimeout(() => {
                     emailError.classList.add('hidden');
                 }, 2000);
@@ -120,10 +112,8 @@ export function initValidation() {
         updateSubmitButton();
     }
     
-    // Expose function globally for steps.js
     window.checkEmailExists = checkEmailExists;
 
-    // Username: Allow only letters, numbers, underscore, and dot
     regUsername.addEventListener('input', function(e) {
         const value = this.value;
         const allowedChars = /^[a-zA-Z0-9_.]*$/;
@@ -132,7 +122,6 @@ export function initValidation() {
             this.value = value.replace(/[^a-zA-Z0-9_.]/g, '');
         }
         
-        // Show "validating..." when user types 3+ characters
         if (value.length >= 3) {
             usernameError.textContent = 'Validating...';
             usernameError.classList.remove('hidden');
@@ -147,7 +136,6 @@ export function initValidation() {
         }
     });
 
-    // Username: Check if exists when user leaves the field
     regUsername.addEventListener('blur', function() {
         const value = this.value.trim();
         if (value.length >= 3) {
@@ -156,7 +144,6 @@ export function initValidation() {
     });
 
     async function checkUsernameExists(username) {
-        // Call actual backend API
         try {
             usernameError.textContent = 'Validating...';
             usernameError.classList.remove('hidden');
@@ -184,7 +171,6 @@ export function initValidation() {
                 regUsername.classList.remove('border-red-500');
                 console.log('Username does not exist - showing available');
                 
-                // Hide the success message after 2 seconds
                 setTimeout(() => {
                     usernameError.classList.add('hidden');
                 }, 2000);
@@ -199,10 +185,8 @@ export function initValidation() {
         updateSubmitButton();
     }
     
-    // Expose function globally for steps.js
     window.checkUsernameExists = checkUsernameExists;
 
-    // Function to update submit button state
     function updateSubmitButton() {
         const hasEmailError = !emailError.classList.contains('hidden');
         const hasUsernameError = !usernameError.classList.contains('hidden');
@@ -216,28 +200,23 @@ export function initValidation() {
         }
     }
 
-    // Form submission validation
     registrationForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Validate email before submission
         const emailValue = email.value.trim();
         if (emailValue && emailValue.includes('@') && emailValue.includes('.')) {
             checkEmailExists(emailValue);
         }
         
-        // Validate username before submission
         const usernameValue = regUsername.value.trim();
         if (usernameValue.length >= 3) {
             checkUsernameExists(usernameValue);
         }
         
-        // Check if email or username has errors after validation
         setTimeout(() => {
             if (!emailError.classList.contains('hidden') || !usernameError.classList.contains('hidden')) {
                 return;
             }
-            // If no errors, submit the form
             registrationForm.submit();
         }, 100);
     });

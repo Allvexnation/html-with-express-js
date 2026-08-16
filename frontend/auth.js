@@ -1,3 +1,12 @@
+/*
+Developer: Jhon Ladines
+Website: https://www.jhonladines.top/
+Copyright © 2026 Jhon Ladines
+This script is from ELEC 07 for school purposes
+Made by Jhon Ladines
+All rights reserved.
+*/
+
 const API_BASE_URL = 'https://jhon-ladines-server-elec7.onrender.com/api/auth';
 
 export async function registerUser(formData) {
@@ -91,6 +100,15 @@ export function initLoginForm() {
         const password = document.getElementById('password').value;
         const loginBtn = document.getElementById('loginBtn');
 
+        console.log('Form submitted - Username:', username, 'Password length:', password.length);
+        console.log('Username element:', document.getElementById('username'));
+        console.log('Password element:', document.getElementById('password'));
+
+        if (!username || !password) {
+            alert('Please enter both username and password');
+            return;
+        }
+
         loginBtn.textContent = 'Logging in...';
         loginBtn.disabled = true;
 
@@ -154,7 +172,6 @@ export function initAuth() {
 }
 
 function initRegistrationForm() {
-    // initSteps will be called from bundle.js after DOM is ready
 
     document.getElementById('registrationForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -201,14 +218,12 @@ function initRegistrationForm() {
         const result = await registerUser(formData);
 
         if (result.success) {
-            // Auto-login after registration to get token
             const loginResult = await loginUser(formData.username, formData.password);
             
             if (loginResult.success) {
                 alert('Registration successful!');
                 window.location.href = 'home.html';
             } else {
-                // If auto-login fails, still redirect but user may need to login again
                 const userData = {
                     id: result.data[0]?.id || result.data.id,
                     username: formData.username,

@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/crtlogo.png">
     <title>Login Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="js-body">
+<body class="js-body" style="background: linear-gradient(135deg, #0a1628 0%, #1a365d 50%, #0d2137 100%) !important;">
+    <div class="js-bg-image-layer" style="background-image: url('assets/Overview1.jpg');"></div>
     <main class="js-card">
-        <aside class="js-left-panel" style="background-image: url('https://res.cloudinary.com/dbob1wota/image/upload/images_3_yg87hg.jpg');">
+        <aside class="js-left-panel" style="background-image: url('assets/Overview3.jpg'); position: relative;">
+            <div id="blurOverlay" class="hidden absolute inset-0 bg-black bg-opacity-30 backdrop-blur-sm transition-all duration-500"></div>
+            <div id="userProfile" class="hidden flex flex-col items-center justify-center h-full relative z-10">
+                <div class="w-24 h-24 rounded-full bg-white bg-opacity-20 backdrop-blur-sm flex items-center justify-center overflow-hidden border-2 border-white border-opacity-30 mb-4">
+                    <img id="profileImage" src="" alt="Profile" class="w-full h-full object-cover hidden">
+                    <i data-lucide="user" id="defaultAvatar" class="w-12 h-12 text-white"></i>
+                </div>
+                <h2 id="welcomeMessage" class="text-white text-2xl font-bold mb-2 text-center"></h2>
+                <p id="userEmail" class="text-white text-opacity-80 text-sm text-center"></p>
+            </div>
         </aside>
         
         <section class="js-right-panel">
@@ -66,6 +77,7 @@
         </section>
     </main>
 
+    <script type="module" src="bundle.js"></script>
     <script type="module" src="tailwind-login.js"></script>
     <script type="module" src="script.js"></script>
 </body>

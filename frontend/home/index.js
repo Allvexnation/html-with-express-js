@@ -1,29 +1,33 @@
+/*
+Developer: Jhon Ladines
+Website: https://www.jhonladines.top/
+Copyright © 2026 Jhon Ladines
+This script is from ELEC 07 for school purposes
+Made by Jhon Ladines
+All rights reserved.
+*/
+
 import { isAuthenticated, removeToken, getToken } from '../token/index.js';
 import { getCurrentUser } from '../auth/index.js';
+import { animatePageTransition, animateNavLinks, animateCardHover, animateButtons, animateProfileShow, animateProfileHide, refreshAnimations, animateGradesTable } from '../home-animation.js';
 
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
-// Check authentication on page load - redirect to login if not authenticated
 if (!isAuthenticated()) {
     window.location.href = 'index.html';
 }
 
-// Set current date
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 const today = new Date();
 const dateString = today.toLocaleDateString('en-US', options);
 
-// State for page switching
 let currentPage = 'dashboard';
 
-// Data state
 let subjectsData = [];
 let enrollmentsData = [];
 let gradesData = [];
 let completionsData = [];
-
-// API functions
 async function getSubjects() {
     try {
         const response = await fetch(`${API_BASE}/subjects`);
@@ -99,7 +103,6 @@ async function fetchCurrentUser() {
     }
 }
 
-// Page content templates (dynamic)
 function getDashboardContent() {
     const user = getCurrentUser();
     const name = user?.fullName || user?.username || 'User';
@@ -116,7 +119,6 @@ function getDashboardContent() {
         : 0;
 
     return `
-        <!-- Welcome Card -->
         <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
             <h1 class="text-3xl font-bold mb-2" id="greeting">${timeGreeting}, ${name}! 👋</h1>
             <p class="text-blue-100 mb-6" id="currentDate">${dateString} - ${enrolledCount} courses enrolled - ${completedCount} completed</p>
@@ -132,7 +134,6 @@ function getDashboardContent() {
             </div>
         </div>
 
-        <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
                 <div class="bg-blue-100 p-4 rounded-full">
@@ -172,7 +173,6 @@ function getDashboardContent() {
             </div>
         </div>
 
-        <!-- Quick Access -->
         <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
             <i class="fas fa-bolt text-yellow-500 mr-2"></i>
             Quick Access
@@ -350,18 +350,15 @@ function getGradesContent() {
     `;
 }
 
-// Render function
 function render() {
     const header = `
         <header class="bg-blue-900 text-white shadow-lg">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-                <!-- Logo -->
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-graduation-cap text-2xl"></i>
                     <span class="font-bold text-lg">CRT COLLEGE LMS | SJ</span>
                 </div>
 
-                <!-- Navigation -->
                 <nav class="hidden md:flex items-center space-x-6">
                     <a href="#" onclick="switchPage('dashboard')" class="nav-link flex items-center space-x-2 ${currentPage === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="dashboard">
                         <i class="fas fa-home"></i>
@@ -385,7 +382,6 @@ function render() {
                     </a>
                 </nav>
 
-                <!-- Right Icons -->
                 <div class="flex items-center space-x-4">
                     <button class="hover:bg-blue-800 p-2 rounded-lg transition">
                         <i class="fas fa-calendar text-xl"></i>
@@ -420,15 +416,32 @@ function render() {
     `;
 
     root.innerHTML = header + main;
+    
+    setTimeout(() => {
+        animateNavLinks();
+        animateCardHover();
+        animateButtons();
+    }, 100);
 }
 
-// Switch page function
 window.switchPage = function(page) {
     currentPage = page;
     render();
+    
+    setTimeout(() => {
+        const pageElement = document.querySelector('.page-content:not(.hidden)');
+        if (pageElement) {
+            animatePageTransition(pageElement);
+        }
+        
+        if (page === 'grades') {
+            animateGradesTable();
+        }
+        
+        refreshAnimations();
+    }, 50);
 };
 
-// Load student data
 async function loadStudentData() {
     const user = getCurrentUser();
     if (!user || !user.id) {
@@ -436,35 +449,33 @@ async function loadStudentData() {
         return;
     }
 
-    // Load subjects
     const subjectsResult = await getSubjects();
     if (subjectsResult.success && subjectsResult.data) {
         subjectsData = subjectsResult.data;
     }
 
-    // Load enrollments
     const enrollmentsResult = await getStudentEnrollments(user.id);
     if (enrollmentsResult.success && enrollmentsResult.data) {
         enrollmentsData = enrollmentsResult.data;
     }
 
-    // Load grades
     const gradesResult = await getStudentGrades(user.id);
     if (gradesResult.success && gradesResult.data) {
         gradesData = gradesResult.data;
     }
 
-    // Load completions
     const completionsResult = await getStudentCompletions(user.id);
     if (completionsResult.success && completionsResult.data) {
         completionsData = completionsResult.data;
     }
 
-    // Re-render with new data
     render();
+    
+    setTimeout(() => {
+        refreshAnimations();
+    }, 100);
 }
 
-// Mark subject as complete
 window.markSubjectComplete = async function(subjectId) {
     if (confirm('Are you sure you want to mark this subject as complete?')) {
         const user = getCurrentUser();
@@ -496,7 +507,6 @@ window.markSubjectComplete = async function(subjectId) {
     }
 };
 
-// Profile management functions
 function showUserProfile() {
     const user = getCurrentUser();
     if (!user) {
@@ -514,12 +524,24 @@ function showUserProfile() {
 
     renderProfileView(user);
     modal.style.display = 'flex';
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateProfileShow(modalContent);
+    }
 }
 
 function closeUserProfile() {
     const modal = document.getElementById('userProfileModal');
     if (modal) {
-        modal.style.display = 'none';
+        const modalContent = modal.querySelector('.bg-white');
+        if (modalContent) {
+            animateProfileHide(modalContent, () => {
+                modal.style.display = 'none';
+            });
+        } else {
+            modal.style.display = 'none';
+        }
     }
 }
 
@@ -658,11 +680,29 @@ function renderProfileEdit() {
             </form>
         </div>
     `;
+    
+    const modalContent = modal.querySelector('.bg-white');
+    if (modalContent) {
+        animateProfileShow(modalContent);
+    }
 }
 
 function cancelEdit() {
     const user = getCurrentUser();
-    renderProfileView(user);
+    const modal = document.getElementById('userProfileModal');
+    const modalContent = modal?.querySelector('.bg-white');
+    
+    if (modalContent) {
+        animateProfileHide(modalContent, () => {
+            renderProfileView(user);
+            const newModalContent = modal.querySelector('.bg-white');
+            if (newModalContent) {
+                animateProfileShow(newModalContent);
+            }
+        });
+    } else {
+        renderProfileView(user);
+    }
 }
 
 window.previewProfileImage = function(event) {
@@ -737,7 +777,6 @@ window.renderProfileEdit = renderProfileEdit;
 window.cancelEdit = cancelEdit;
 window.logout = logout;
 
-// Initial render and data load
 fetchCurrentUser();
 render();
 loadStudentData();

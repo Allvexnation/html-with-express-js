@@ -10,6 +10,8 @@ All rights reserved.
 import { initSteps } from 'https://jhon-code-elec7.netlify.app/steps.js';
 import { initAuth } from 'https://jhon-code-elec7.netlify.app/auth.js';
 import { initValidation } from 'https://jhon-code-elec7.netlify.app/validation.js';
+import './animation.js';
+import './user-profile.js';
 
 async function init() {
     if (window.initAnimation) window.initAnimation();

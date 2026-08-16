@@ -15,22 +15,16 @@ function initSteps(formId) {
         child.querySelector && (child.querySelector('input') || child.querySelector('select'))
     );
     
-    // Clear existing steps array
     steps = [];
     
-    // Define step boundaries based on field indices
-    // Personal Information: 0-5 (6 fields) -> 3 steps of 2
-    // Account Information: 6-8 (3 fields) -> 1 step of 3
-    // Additional Requirements: 9-11 (3 fields) -> 1 step of 3
     const stepConfig = [
-        { start: 0, end: 2 },   // Step 1: Full Name, Address
-        { start: 2, end: 4 },   // Step 2: Cell Number, Date of Birth
-        { start: 4, end: 6 },   // Step 3: Age, Email
-        { start: 6, end: 9 },   // Step 4: Username, Password, Confirm Password (3 fields)
-        { start: 9, end: 12 }   // Step 5: Gender, Hobbies, Agreement (3 fields)
+        { start: 0, end: 2 },
+        { start: 2, end: 4 },
+        { start: 4, end: 6 },
+        { start: 6, end: 9 },
+        { start: 9, end: 12 }
     ];
     
-    // Group field containers into steps based on config
     stepConfig.forEach(config => {
         const stepFields = [];
         for (let i = config.start; i < config.end && i < fieldContainers.length; i++) {
@@ -39,13 +33,11 @@ function initSteps(formId) {
         steps.push(stepFields);
     });
     
-    // Hide all field containers first
     fieldContainers.forEach(container => {
         container.style.display = 'none';
         container.style.transition = 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out';
     });
     
-    // Show only the first step's fields
     steps[0].forEach(container => {
         container.style.display = 'block';
         container.style.opacity = 1;
@@ -63,7 +55,6 @@ function initSteps(formId) {
     document.getElementById('nextBtn').onclick = () => changeStep(1);
     form.querySelector('button[type="submit"]').style.display = 'none';
 
-    // Add keyboard navigation
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft') {
             e.preventDefault();
@@ -74,10 +65,8 @@ function initSteps(formId) {
         } else if (e.key === 'Enter') {
             e.preventDefault();
             if (currentStep === steps.length - 1) {
-                // On last step, submit the form
                 form.querySelector('button[type="submit"]').click();
             } else {
-                // On other steps, go to next step
                 changeStep(1);
             }
         }
@@ -115,7 +104,6 @@ function changeStep(dir) {
         
         if (!allValid) return;
         
-        // Check email validation before proceeding from step 3 (which contains email)
         if (currentStep === 2) {
             const emailField = document.getElementById('email');
             const emailError = document.getElementById('emailError');
@@ -125,7 +113,6 @@ function changeStep(dir) {
                 console.log('Email step validation - emailValue:', emailValue);
                 
                 if (emailValue && emailValue.includes('@') && emailValue.includes('.')) {
-                    // Trigger email validation check (async)
                     if (window.checkEmailExists) {
                         const nextBtn = document.getElementById('nextBtn');
                         if (nextBtn) {
@@ -142,25 +129,22 @@ function changeStep(dir) {
                             console.log('After validation - error hidden?', emailError.classList.contains('hidden'));
                             console.log('Error text color classes:', emailError.className);
                             
-                            // Check if it's an actual error (red text) vs success message (green text)
                             const hasError = emailError.classList.contains('text-red-500');
                             
                             if (hasError) {
                                 emailField.focus();
                                 console.log('Blocking navigation due to email error');
-                                return; // Don't proceed if email has error
+                                return;
                             }
-                            // Proceed if no error (either hidden or green success message)
                             if (window.triggerGreenBlink) window.triggerGreenBlink();
                             proceedToStep(dir, newStep);
                         });
-                        return; // Block immediate navigation, wait for async check
+                        return;
                     }
                 }
             }
         }
         
-        // Check username validation before proceeding from step 4 (which contains username)
         if (currentStep === 3) {
             const usernameField = document.getElementById('regUsername');
             const usernameError = document.getElementById('usernameError');
@@ -168,7 +152,6 @@ function changeStep(dir) {
             if (usernameField && usernameError) {
                 const usernameValue = usernameField.value.trim();
                 if (usernameValue.length >= 3) {
-                    // Trigger username validation check (async)
                     if (window.checkUsernameExists) {
                         const nextBtn = document.getElementById('nextBtn');
                         if (nextBtn) {
@@ -182,18 +165,16 @@ function changeStep(dir) {
                                 nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                             }
                             
-                            // Check if it's an actual error (red text) vs success message (green text)
                             const hasError = usernameError.classList.contains('text-red-500');
                             
                             if (hasError) {
                                 usernameField.focus();
-                                return; // Don't proceed if username has error
+                                return;
                             }
-                            // Proceed if no error (either hidden or green success message)
                             if (window.triggerGreenBlink) window.triggerGreenBlink();
                             proceedToStep(dir, newStep);
                         });
-                        return; // Block immediate navigation, wait for async check
+                        return;
                     }
                 }
             }
@@ -208,7 +189,6 @@ function changeStep(dir) {
 }
 
 function proceedToStep(dir, newStep) {
-    // Fade out current step fields
     steps[currentStep].forEach(container => {
         container.style.opacity = 0;
         container.style.transform = dir > 0 ? 'translateX(-20px)' : 'translateX(20px)';
@@ -221,17 +201,14 @@ function proceedToStep(dir, newStep) {
         
         currentStep = newStep;
         
-        // Prepare new step fields for fade in
         steps[currentStep].forEach(container => {
             container.style.display = 'block';
             container.style.opacity = 0;
             container.style.transform = dir > 0 ? 'translateX(20px)' : 'translateX(-20px)';
         });
         
-        // Trigger reflow
         void steps[currentStep][0].offsetHeight;
         
-        // Fade in new step fields
         setTimeout(() => {
             steps[currentStep].forEach(container => {
                 container.style.opacity = 1;

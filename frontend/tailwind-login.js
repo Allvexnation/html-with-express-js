@@ -1,10 +1,9 @@
-import { sharedClassMap } from './tailwind-shared.js';
-import { TailwindClass } from './tailwind-init.js';
+import { sharedClassMap } from './class.js';
+import { TailwindClass } from 'https://jhon-code-elec7.netlify.app/tailwind-init.js';
 
-// Login-specific class extensions
 const loginClassMap = {
     'js-form': 'space-y-6',
-    'js-card': 'bg-white rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row',
+    'js-card': 'bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row relative z-10 border border-white/20',
     'js-left-panel': 'w-full md:w-1/2 p-8 flex flex-col justify-center bg-cover bg-center',
     'js-header': 'text-center text-white',
     'js-figure': 'mb-6',
