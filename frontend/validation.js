@@ -188,8 +188,8 @@ export function initValidation() {
     window.checkUsernameExists = checkUsernameExists;
 
     function updateSubmitButton() {
-        const hasEmailError = !emailError.classList.contains('hidden');
-        const hasUsernameError = !usernameError.classList.contains('hidden');
+        const hasEmailError = emailError.classList.contains('text-red-500');
+        const hasUsernameError = usernameError.classList.contains('text-red-500');
         
         if (hasEmailError || hasUsernameError) {
             submitButton.disabled = true;
