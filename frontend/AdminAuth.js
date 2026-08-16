@@ -12,7 +12,7 @@ import 'https://jhon-code-elec7.netlify.app/admin-animation.js';
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
-if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggficedIn()) {
+if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggedIn()) {
     window.location.href = 'AdminDashboard.html';
 }
 
