@@ -14,6 +14,7 @@ console.log('AdminAuth.js loaded');
 console.log('Root element:', root);
 console.log('Current pathname:', window.location.pathname);
 console.log('Checking if pathname includes AdminLogin.html:', window.location.pathname.includes('AdminLogin.html'));
+console.log('Checking if pathname includes adminlogin:', window.location.pathname.includes('adminlogin'));
 
 function getAdmin() {
     const admin = localStorage.getItem('admin');
