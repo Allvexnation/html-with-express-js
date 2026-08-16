@@ -7,12 +7,12 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import '../admin-animation.js';
+import 'https://jhon-code-elec7.netlify.app/admin-animation.js';
 
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
-if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggedIn()) {
+if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggficedIn()) {
     window.location.href = 'AdminDashboard.html';
 }
 
