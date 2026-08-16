@@ -10,22 +10,144 @@ All rights reserved.
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
 
-console.log('AdminAuth.js loaded');
-console.log('Root element:', root);
-console.log('Current pathname:', window.location.pathname);
-console.log('Checking if pathname includes AdminLogin.html:', window.location.pathname.includes('AdminLogin.html'));
-console.log('Checking if pathname includes adminlogin:', window.location.pathname.includes('adminlogin'));
+function animateLoginCard() {
+    const card = document.querySelector('main');
+    if (card) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(100px) scale(0.8) rotateX(20deg)';
+        card.style.transition = 'opacity 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) scale(1) rotateX(0deg)';
+        }, 100);
+    }
 
-function getAdmin() {
+    const leftPanel = document.querySelector('aside');
+    if (leftPanel) {
+        leftPanel.style.opacity = '0';
+        leftPanel.style.transition = 'opacity 1s ease-out';
+        setTimeout(() => {
+            leftPanel.style.opacity = '1';
+        }, 300);
+    }
+
+    const rightPanel = document.querySelector('section');
+    if (rightPanel) {
+        rightPanel.style.opacity = '0';
+        rightPanel.style.transform = 'translateX(50px)';
+        rightPanel.style.transition = 'opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            rightPanel.style.opacity = '1';
+            rightPanel.style.transform = 'translateX(0)';
+        }, 400);
+    }
+
+    const heading = document.querySelector('section h1');
+    if (heading) {
+        heading.style.opacity = '0';
+        heading.style.transform = 'scale(0) rotate(-10deg)';
+        heading.style.transition = 'opacity 0.5s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            heading.style.opacity = '1';
+            heading.style.transform = 'scale(1) rotate(0deg)';
+        }, 500);
+    }
+
+    const subheading = document.querySelector('section p.mb-8');
+    if (subheading) {
+        subheading.style.opacity = '0';
+        subheading.style.transform = 'translateX(-30px)';
+        subheading.style.transition = 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            subheading.style.opacity = '1';
+            subheading.style.transform = 'translateX(0)';
+        }, 600);
+    }
+
+    const formGroups = document.querySelectorAll('form .mb-4');
+    formGroups.forEach((group, index) => {
+        group.style.opacity = '0';
+        group.style.transform = 'translateY(30px) rotate(-5deg) scale(0.9)';
+        group.style.transition = 'opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            group.style.opacity = '1';
+            group.style.transform = 'translateY(0) rotate(0deg) scale(1)';
+        }, 700 + (index * 100));
+    });
+
+    const primaryBtn = document.querySelector('form button[type="submit"]');
+    if (primaryBtn) {
+        primaryBtn.style.opacity = '0';
+        primaryBtn.style.transform = 'scale(0) translateY(20px)';
+        primaryBtn.style.transition = 'opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            primaryBtn.style.opacity = '1';
+            primaryBtn.style.transform = 'scale(1) translateY(0)';
+            setTimeout(() => {
+                primaryBtn.style.animation = 'pulse 2s infinite';
+            }, 500);
+        }, 700 + (formGroups.length * 100) + 100);
+    }
+
+    const footer = document.querySelector('footer');
+    if (footer) {
+        footer.style.opacity = '0';
+        footer.style.transform = 'translateY(20px)';
+        footer.style.transition = 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            footer.style.opacity = '1';
+            footer.style.transform = 'translateY(0)';
+        }, 700 + (formGroups.length * 100) + 200);
+    }
+
+    const shieldIcon = document.querySelector('aside .text-center i[data-lucide="shield"]');
+    if (shieldIcon) {
+        shieldIcon.style.opacity = '0';
+        shieldIcon.style.transform = 'scale(0) rotate(-180deg)';
+        shieldIcon.style.transition = 'opacity 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55), transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            shieldIcon.style.opacity = '0.9';
+            shieldIcon.style.transform = 'scale(1) rotate(0deg)';
+            setTimeout(() => {
+                shieldIcon.style.animation = 'pulse 2s infinite';
+            }, 500);
+        }, 200);
+    }
+
+    const adminHeading = document.querySelector('aside .text-center h2.text-3xl');
+    if (adminHeading) {
+        adminHeading.style.opacity = '0';
+        adminHeading.style.transform = 'translateY(-30px) scale(0.8)';
+        adminHeading.style.transition = 'opacity 0.5s ease-out, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            adminHeading.style.opacity = '1';
+            adminHeading.style.transform = 'translateY(0) scale(1)';
+        }, 400);
+    }
+
+    const adminSubtitle = document.querySelector('aside .text-center p.text-blue-100');
+    if (adminSubtitle) {
+        adminSubtitle.style.opacity = '0';
+        adminSubtitle.style.transform = 'translateY(20px)';
+        adminSubtitle.style.transition = 'opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+        setTimeout(() => {
+            adminSubtitle.style.opacity = '1';
+            adminSubtitle.style.transform = 'translateY(0)';
+        }, 600);
+    }
+}
+
+
+export function getAdmin() {
     const admin = localStorage.getItem('admin');
     return admin ? JSON.parse(admin) : null;
 }
 
-function getAdminToken() {
+export function getAdminToken() {
     return localStorage.getItem('adminToken');
 }
 
-function isAdminLoggedIn() {
+export function isAdminLoggedIn() {
     return !!localStorage.getItem('adminToken');
 }
 
@@ -34,10 +156,7 @@ if ((window.location.pathname.includes('AdminLogin.html') || window.location.pat
 }
 
 function render() {
-    console.log('render() called');
-    console.log('Root element before render:', root);
-    try {
-        root.innerHTML = `
+    root.innerHTML = `
         <main class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row relative z-10 border border-white/20">
             <aside class="w-full md:w-1/2 p-8 flex flex-col justify-center bg-cover bg-center" style="background-image: url('assets/Overview3.jpg'); position: relative;">
                 <div id="blurOverlay" class="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm transition-all duration-500"></div>
@@ -112,13 +231,8 @@ function render() {
         </main>
     `;
 
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-        }
-        console.log('Render completed successfully');
-    } catch (error) {
-        console.error('Render error:', error);
-        root.innerHTML = '<div style="color: white; padding: 20px;">Error loading login form. Please refresh the page.</div>';
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
 }
 
@@ -163,24 +277,15 @@ async function adminLogin(usernameOrEmail, password) {
     }
 }
 
-function adminLogout() {
+export function adminLogout() {
     localStorage.removeItem('admin');
     localStorage.removeItem('adminToken');
     window.location.href = 'AdminLogin.html';
 }
 
 if (window.location.pathname.includes('AdminLogin.html') || window.location.pathname.includes('adminlogin')) {
-    console.log('On AdminLogin.html page');
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM loaded, calling render()');
-            render();
-        });
-    } else {
-        console.log('DOM already ready, calling render()');
-        render();
-    }
-    // animateLoginCard();
+    render();
+    animateLoginCard();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
