@@ -7,17 +7,34 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import { animateLoginCard } from './adminlogin-animation.js';
-
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
+
+console.log('AdminAuth.js loaded');
+console.log('Root element:', root);
+
+function getAdmin() {
+    const admin = localStorage.getItem('admin');
+    return admin ? JSON.parse(admin) : null;
+}
+
+function getAdminToken() {
+    return localStorage.getItem('adminToken');
+}
+
+function isAdminLoggedIn() {
+    return !!localStorage.getItem('adminToken');
+}
 
 if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggedIn()) {
     window.location.href = 'AdminDashboard.html';
 }
 
 function render() {
-    root.innerHTML = `
+    console.log('render() called');
+    console.log('Root element before render:', root);
+    try {
+        root.innerHTML = `
         <main class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row relative z-10 border border-white/20">
             <aside class="w-full md:w-1/2 p-8 flex flex-col justify-center bg-cover bg-center" style="background-image: url('assets/Overview3.jpg'); position: relative;">
                 <div id="blurOverlay" class="absolute inset-0 bg-black bg-opacity-20 backdrop-blur-sm transition-all duration-500"></div>
@@ -95,6 +112,11 @@ function render() {
     if (typeof lucide !== 'undefined') {
         lucide.createIcons();
     }
+    console.log('Render completed successfully');
+    } catch (error) {
+        console.error('Render error:', error);
+        root.innerHTML = '<div style="color: white; padding: 20px;">Error loading login form. Please refresh the page.</div>';
+    }
 }
 
 window.togglePassword = function (fieldId) {
@@ -114,7 +136,7 @@ window.togglePassword = function (fieldId) {
     }
 };
 
-export async function adminLogin(usernameOrEmail, password) {
+async function adminLogin(usernameOrEmail, password) {
     try {
         const response = await fetch(`${API_BASE}/admin/login`, {
             method: 'POST',
@@ -138,27 +160,23 @@ export async function adminLogin(usernameOrEmail, password) {
     }
 }
 
-export function getAdmin() {
-    const admin = localStorage.getItem('admin');
-    return admin ? JSON.parse(admin) : null;
-}
-
-export function getAdminToken() {
-    return localStorage.getItem('adminToken');
-}
-
-export function isAdminLoggedIn() {
-    return !!localStorage.getItem('adminToken');
-}
-
-export function adminLogout() {
+function adminLogout() {
     localStorage.removeItem('admin');
     localStorage.removeItem('adminToken');
     window.location.href = 'AdminLogin.html';
 }
 
 if (window.location.pathname.includes('AdminLogin.html')) {
-    render();
+    console.log('On AdminLogin.html page');
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded, calling render()');
+            render();
+        });
+    } else {
+        console.log('DOM already ready, calling render()');
+        render();
+    }
     // animateLoginCard();
 }
 
