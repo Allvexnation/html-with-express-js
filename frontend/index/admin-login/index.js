@@ -7,4 +7,4 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import '../../admin-login/index.js';
+import 'https://jhon-code-elec7.netlify.app/admin-login/index.js';
