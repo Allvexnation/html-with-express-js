@@ -200,24 +200,4 @@ export function initValidation() {
         }
     }
 
-    registrationForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const emailValue = email.value.trim();
-        if (emailValue && emailValue.includes('@') && emailValue.includes('.')) {
-            checkEmailExists(emailValue);
-        }
-        
-        const usernameValue = regUsername.value.trim();
-        if (usernameValue.length >= 3) {
-            checkUsernameExists(usernameValue);
-        }
-        
-        setTimeout(() => {
-            if (!emailError.classList.contains('hidden') || !usernameError.classList.contains('hidden')) {
-                return;
-            }
-            registrationForm.submit();
-        }, 100);
-    });
 }
