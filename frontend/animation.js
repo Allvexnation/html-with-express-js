@@ -6,6 +6,7 @@ This script is from ELEC 07 for school purposes
 Made by Jhon Ladines
 All rights reserved.
 */
+
 document.addEventListener('DOMContentLoaded', function() {
     const card = document.querySelector('.js-card');
     if (card) {
