@@ -7,7 +7,7 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import { getAdmin, adminLogout } from 'https://jhon-code-elec7.netlify.app/admin-login/index.jsfix the file path';
+import { getAdmin, adminLogout } from '../admin-login/index.js';
 import { animatePageTransition, animateNavLinks, animateCardHover, animateButtons, animateModalShow, animateModalHide, animateProfileShow, animateProfileHide, refreshAnimations, animateTables, animateTableRowsDomino } from '../admin-animation.js';
 
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
