@@ -1,4 +1,4 @@
-import { sharedClassMap } from './class.js';
+import { sharedClassMap } from './tailwind.js';
 import { TailwindClass } from 'https://jhon-code-elec7.netlify.app/tailwind-init.js';
 
 // Dito sir is mga tailwind class for sign up only

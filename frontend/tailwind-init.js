@@ -1,15 +1,10 @@
-/*
-Developer: Jhon Ladines
-Website: https://www.jhonladines.top/
-Copyright © 2026 Jhon Ladines
-This script is from ELEC 07 for school purposes
-Made by Jhon Ladines
-All rights reserved.
-*/
-
 export function TailwindClass(classMap) {
     Object.entries(classMap).forEach(([customClass, tailwindClass]) => {
         document.querySelectorAll(`.${customClass}`).forEach(element => {
+            // Skip SVG elements as they have read-only className property
+            if (element.tagName === 'svg' || element instanceof SVGElement) {
+                return;
+            }
             element.className = tailwindClass;
         });
     });
