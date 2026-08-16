@@ -28,7 +28,7 @@ function isAdminLoggedIn() {
     return !!localStorage.getItem('adminToken');
 }
 
-if (window.location.pathname.includes('AdminLogin.html') && isAdminLoggedIn()) {
+if ((window.location.pathname.includes('AdminLogin.html') || window.location.pathname.includes('adminlogin')) && isAdminLoggedIn()) {
     window.location.href = 'AdminDashboard.html';
 }
 
@@ -168,7 +168,7 @@ function adminLogout() {
     window.location.href = 'AdminLogin.html';
 }
 
-if (window.location.pathname.includes('AdminLogin.html')) {
+if (window.location.pathname.includes('AdminLogin.html') || window.location.pathname.includes('adminlogin')) {
     console.log('On AdminLogin.html page');
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
