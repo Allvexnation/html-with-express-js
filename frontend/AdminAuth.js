@@ -7,7 +7,7 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
-import 'https://jhon-code-elec7.netlify.app/admin-animation.js';
+import 'https://jhon-code-elec7.netlify.app/adminlogin-animation.js';
 
 const API_BASE = 'https://jhon-ladines-server-elec7.onrender.com/api';
 const root = document.getElementById('root');
