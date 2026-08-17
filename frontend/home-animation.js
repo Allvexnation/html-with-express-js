@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Animate welcome card with bounce effect
-    const welcomeCard = document.querySelector('.bg-gradient-to-r');
+    const welcomeCard = document.querySelector('.glass-card, .bg-gradient-to-r');
     if (welcomeCard) {
         welcomeCard.style.opacity = '0';
         welcomeCard.style.transform = 'translateY(50px) scale(0.9)';
@@ -104,7 +104,7 @@ export function animateNavLinks() {
 
 // Card hover animation
 export function animateCardHover() {
-    const cards = document.querySelectorAll('.bg-white.rounded-xl.shadow-md');
+    const cards = document.querySelectorAll('.glass-card, .glass-card-light, .bg-white.rounded-xl');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px) scale(1.02)';

@@ -7,6 +7,38 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
+const style = document.createElement('style');
+style.textContent = `
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #e2e8f0;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+    }
+`;
+document.head.appendChild(style);
+
 import { isAuthenticated, removeToken, getToken } from '../token/index.js';
 import { getCurrentUser } from '../auth/index.js';
 import { animatePageTransition, animateNavLinks, animateCardHover, animateButtons, animateProfileShow, animateProfileHide, refreshAnimations, animateGradesTable } from '../home-animation.js';
@@ -119,18 +151,21 @@ function getDashboardContent() {
         : 0;
 
     return `
-        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
-            <h1 class="text-3xl font-bold mb-2" id="greeting">${timeGreeting}, ${name}! 👋</h1>
-            <p class="text-blue-100 mb-6" id="currentDate">${dateString} - ${enrolledCount} courses enrolled - ${completedCount} completed</p>
-            <div class="flex space-x-4">
-                <button onclick="switchPage('subjects')" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition flex items-center space-x-2">
-                    <i class="fas fa-search"></i>
-                    <span>Explore Subject</span>
-                </button>
-                <button onclick="switchPage('my-subjects')" class="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition flex items-center space-x-2">
-                    <i class="fas fa-book"></i>
-                    <span>My Subject</span>
-                </button>
+        <div class="relative bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-8 mb-8 text-white shadow-lg overflow-hidden">
+            <div class="absolute inset-0 opacity-20" style="background-image: url('https://res.cloudinary.com/dbob1wota/image/upload/Overview1_ndbo7v.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl font-bold mb-2" id="greeting">${timeGreeting}, ${name}!</h1>
+                <p class="text-blue-100 mb-6" id="currentDate">${dateString} - ${enrolledCount} courses enrolled - ${completedCount} completed</p>
+                <div class="flex space-x-4">
+                    <button onclick="switchPage('subjects')" class="bg-yellow-400 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition flex items-center space-x-2">
+                        <i class="fas fa-search"></i>
+                        <span>Explore Subjects</span>
+                    </button>
+                    <button onclick="switchPage('my-subjects')" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition flex items-center space-x-2">
+                        <i class="fas fa-book"></i>
+                        <span>My Subjects</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -141,25 +176,25 @@ function getDashboardContent() {
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statSubjects">${subjectsCount}</p>
-                    <p class="text-gray-500">SUBJECT</p>
+                    <p class="text-gray-500 text-sm">SUBJECTS</p>
                 </div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
-                <div class="bg-green-100 p-4 rounded-full">
-                    <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                <div class="bg-yellow-100 p-4 rounded-full">
+                    <i class="fas fa-check-circle text-yellow-600 text-2xl"></i>
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statCompleted">${completedCount}</p>
-                    <p class="text-gray-500">COMPLETED</p>
+                    <p class="text-gray-500 text-sm">COMPLETED</p>
                 </div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
-                <div class="bg-orange-100 p-4 rounded-full">
-                    <i class="fas fa-clipboard-list text-orange-600 text-2xl"></i>
+                <div class="bg-blue-100 p-4 rounded-full">
+                    <i class="fas fa-clipboard-list text-blue-600 text-2xl"></i>
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800">2</p>
-                    <p class="text-gray-500">QUIZ ATTEMPTS</p>
+                    <p class="text-gray-500 text-sm">QUIZ ATTEMPTS</p>
                 </div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
@@ -168,7 +203,7 @@ function getDashboardContent() {
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statAvgGrade">${avgGrade}%</p>
-                    <p class="text-gray-500">AVG QUIZ SCORE</p>
+                    <p class="text-gray-500 text-sm">AVG SCORE</p>
                 </div>
             </div>
         </div>
@@ -179,29 +214,29 @@ function getDashboardContent() {
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div onclick="switchPage('subjects')" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-purple-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-search text-purple-600 text-2xl"></i>
+                <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-search text-blue-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">Browse Subjects</h3>
                 <p class="text-gray-500 text-sm">Explore available courses</p>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-red-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-gamepad text-red-600 text-2xl"></i>
+                <div class="bg-yellow-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-gamepad text-yellow-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">Quiz Games</h3>
                 <p class="text-gray-500 text-sm">Test your knowledge</p>
             </div>
             <div onclick="switchPage('grades')" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-green-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-chart-line text-green-600 text-2xl"></i>
+                <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-line text-blue-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">My Grades</h3>
                 <p class="text-gray-500 text-sm">View your performance</p>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-tasks text-blue-600 text-2xl"></i>
+                <div class="bg-yellow-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-tasks text-yellow-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">My Progress</h3>
                 <p class="text-gray-500 text-sm">Track your learning</p>
@@ -214,7 +249,7 @@ function getSubjectsContent() {
     if (subjectsData.length === 0) {
         return `
             <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-                <i class="fas fa-book text-blue-500 mr-3"></i>
+                <i class="fas fa-book text-blue-600 mr-3"></i>
                 All Subjects
             </h1>
             <div class="bg-white rounded-xl p-6 shadow-md">
@@ -225,7 +260,7 @@ function getSubjectsContent() {
 
     return `
         <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-            <i class="fas fa-book text-blue-500 mr-3"></i>
+            <i class="fas fa-book text-blue-600 mr-3"></i>
             All Subjects
         </h1>
         <div id="allSubjectsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -258,7 +293,7 @@ function getMySubjectsContent() {
     if (enrolledSubjects.length === 0) {
         return `
             <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-                <i class="fas fa-book-open text-green-500 mr-3"></i>
+                <i class="fas fa-book-open text-blue-600 mr-3"></i>
                 My Enrolled Subjects
             </h1>
             <div class="bg-white rounded-xl p-6 shadow-md">
@@ -269,30 +304,30 @@ function getMySubjectsContent() {
 
     return `
         <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-            <i class="fas fa-book-open text-green-500 mr-3"></i>
+            <i class="fas fa-book-open text-blue-600 mr-3"></i>
             My Enrolled Subjects
         </h1>
         <div id="myEnrolledSubjectsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             ${enrolledSubjects.map(subject => {
                 const isCompleted = completedSubjectIds.includes(subject.id);
                 return `
-                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden ${isCompleted ? 'border-2 border-green-500' : ''}">
+                <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden">
                     ${subject.cover_photo 
                         ? `<img src="${subject.cover_photo}" alt="${subject.subject_name}" class="w-full h-40 object-cover">`
-                        : `<div class="w-full h-40 bg-gradient-to-r from-green-500 to-green-600 flex items-center justify-center">
+                        : `<div class="w-full h-40 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center">
                             <i class="fas fa-book-open text-white text-4xl"></i>
                         </div>`
                     }
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs ${isCompleted ? 'bg-green-500 text-white' : 'bg-green-100 text-green-800'} px-2 py-1 rounded-full">${subject.subject_code}</span>
+                            <span class="text-xs ${isCompleted ? 'bg-yellow-500 text-white' : 'bg-blue-100 text-blue-800'} px-2 py-1 rounded-full">${subject.subject_code}</span>
                         </div>
                         <h3 class="font-semibold text-gray-800 mb-2">${subject.subject_name}</h3>
                         <p class="text-sm text-gray-500 mb-2">${subject.teacher_name || 'No teacher assigned'}</p>
                         <p class="text-xs text-gray-400 mb-4">${subject.description || 'No description'}</p>
                         ${isCompleted 
-                            ? '<button disabled class="w-full bg-gray-400 text-white py-2 rounded-lg font-medium cursor-not-allowed">Completed ✓</button>'
-                            : `<button onclick="markSubjectComplete('${subject.id}')" class="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
+                            ? '<button disabled class="w-full bg-yellow-400 text-blue-900 py-2 rounded-lg font-medium cursor-not-allowed">Completed ✓</button>'
+                            : `<button onclick="markSubjectComplete('${subject.id}')" class="w-full bg-yellow-400 text-blue-900 hover:bg-yellow-300 py-2 rounded-lg font-medium transition">
                                 Complete
                             </button>`
                         }
@@ -307,7 +342,7 @@ function getGradesContent() {
     if (gradesData.length === 0) {
         return `
             <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-                <i class="fas fa-chart-bar text-purple-500 mr-3"></i>
+                <i class="fas fa-chart-bar text-blue-600 mr-3"></i>
                 My Grades
             </h1>
             <div class="bg-white rounded-xl shadow-md p-6">
@@ -318,7 +353,7 @@ function getGradesContent() {
 
     return `
         <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
-            <i class="fas fa-chart-bar text-purple-500 mr-3"></i>
+            <i class="fas fa-chart-bar text-blue-600 mr-3"></i>
             My Grades
         </h1>
         <div class="bg-white rounded-xl shadow-md p-6">
@@ -336,9 +371,9 @@ function getGradesContent() {
                             <td class="py-3 px-4 text-sm text-gray-800">${grade.subjects?.subject_name || 'Unknown'}</td>
                             <td class="py-3 px-4 text-sm">
                                 <span class="px-2 py-1 rounded-full text-xs font-medium ${
-                                    grade.grade >= 90 ? 'bg-green-100 text-green-800' :
+                                    grade.grade >= 90 ? 'bg-blue-100 text-blue-800' :
                                     grade.grade >= 70 ? 'bg-yellow-100 text-yellow-800' :
-                                    'bg-red-100 text-red-800'
+                                    'bg-blue-100 text-blue-800'
                                 }">${grade.grade}%</span>
                             </td>
                             <td class="py-3 px-4 text-sm text-gray-600">${grade.remarks || '-'}</td>
@@ -355,24 +390,24 @@ function render() {
         <header class="bg-blue-900 text-white shadow-lg">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-graduation-cap text-2xl"></i>
+                    <i class="fas fa-graduation-cap text-yellow-400 text-2xl"></i>
                     <span class="font-bold text-lg">CRT COLLEGE LMS | SJ</span>
                 </div>
 
                 <nav class="hidden md:flex items-center space-x-6">
-                    <a href="#" onclick="switchPage('dashboard')" class="nav-link flex items-center space-x-2 ${currentPage === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="dashboard">
+                    <a href="#" onclick="switchPage('dashboard')" class="nav-link flex items-center space-x-2 ${currentPage === 'dashboard' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="dashboard">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="#" onclick="switchPage('subjects')" class="nav-link flex items-center space-x-2 ${currentPage === 'subjects' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="subjects">
+                    <a href="#" onclick="switchPage('subjects')" class="nav-link flex items-center space-x-2 ${currentPage === 'subjects' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="subjects">
                         <i class="fas fa-book"></i>
                         <span>Subjects</span>
                     </a>
-                    <a href="#" onclick="switchPage('my-subjects')" class="nav-link flex items-center space-x-2 ${currentPage === 'my-subjects' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="my-subjects">
+                    <a href="#" onclick="switchPage('my-subjects')" class="nav-link flex items-center space-x-2 ${currentPage === 'my-subjects' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="my-subjects">
                         <i class="fas fa-book-open"></i>
                         <span>My Subjects</span>
                     </a>
-                    <a href="#" onclick="switchPage('grades')" class="nav-link flex items-center space-x-2 ${currentPage === 'grades' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="grades">
+                    <a href="#" onclick="switchPage('grades')" class="nav-link flex items-center space-x-2 ${currentPage === 'grades' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="grades">
                         <i class="fas fa-chart-bar"></i>
                         <span>Grades</span>
                     </a>
@@ -388,7 +423,7 @@ function render() {
                     </button>
                     <button class="hover:bg-blue-800 p-2 rounded-lg transition relative">
                         <i class="fas fa-envelope text-xl"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        <span class="absolute -top-1 -right-1 bg-yellow-400 text-blue-900 text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">3</span>
                     </button>
                     <button id="profileIcon" onclick="showUserProfile()" class="hover:bg-blue-800 p-2 rounded-lg transition">
                         <i class="fas fa-user-circle text-xl"></i>
@@ -586,10 +621,10 @@ function renderProfileView(user) {
                     <p class="text-sm text-gray-500"><strong>Created:</strong> ${formattedDate}</p>
                 </div>
                 <div class="flex space-x-3 pt-4">
-                    <button onclick="renderProfileEdit()" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    <button onclick="renderProfileEdit()" class="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
                         Edit Profile
                     </button>
-                    <button onclick="logout()" class="flex-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
+                    <button onclick="logout()" class="flex-1 bg-yellow-400 text-blue-900 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition">
                         Logout
                     </button>
                 </div>
@@ -670,10 +705,10 @@ function renderProfileEdit() {
                     </div>
                 </div>
                 <div class="flex space-x-3 pt-4">
-                    <button type="button" onclick="cancelEdit()" class="flex-1 bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition">
+                    <button type="button" onclick="cancelEdit()" class="flex-1 bg-gray-500 text-white py-2 rounded-lg font-semibold hover:bg-gray-600 transition">
                         Cancel
                     </button>
-                    <button type="button" onclick="saveProfile()" class="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    <button type="button" onclick="saveProfile()" class="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
                         Save Changes
                     </button>
                 </div>
