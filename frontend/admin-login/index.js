@@ -138,16 +138,16 @@ function animateLoginCard() {
 }
 
 
-function getAdmin() {
+export function getAdmin() {
     const admin = localStorage.getItem('admin');
     return admin ? JSON.parse(admin) : null;
 }
 
-function getAdminToken() {
+export function getAdminToken() {
     return localStorage.getItem('adminToken');
 }
 
-function isAdminLoggedIn() {
+export function isAdminLoggedIn() {
     return !!localStorage.getItem('adminToken');
 }
 
