@@ -272,18 +272,21 @@ function getDashboardContent() {
     const gradesCount = gradesData.length || 0;
 
     return `
-        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-8 text-white shadow-lg">
-            <h1 class="text-3xl font-bold mb-2" id="greeting">${timeGreeting}, ${name}! 👋</h1>
-            <p class="text-blue-100 mb-6" id="currentDate">${dateString}</p>
-            <div class="flex space-x-4">
-                <button onclick="switchPage('students')" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition flex items-center space-x-2">
-                    <i class="fas fa-users"></i>
-                    <span>Manage Students</span>
-                </button>
-                <button onclick="switchPage('subjects')" class="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition flex items-center space-x-2">
-                    <i class="fas fa-book"></i>
-                    <span>Manage Subjects</span>
-                </button>
+        <div class="relative bg-gradient-to-r from-blue-600 to-blue-700 rounded-xl p-8 mb-8 text-white shadow-lg overflow-hidden">
+            <div class="absolute inset-0 opacity-20" style="background-image: url('https://res.cloudinary.com/dbob1wota/image/upload/Overview1_ndbo7v.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="relative z-10">
+                <h1 class="text-3xl font-bold mb-2" id="greeting">${timeGreeting}, ${name}!</h1>
+                <p class="text-blue-100 mb-6" id="currentDate">${dateString}</p>
+                <div class="flex space-x-4">
+                    <button onclick="switchPage('students')" class="bg-yellow-400 text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition flex items-center space-x-2">
+                        <i class="fas fa-users"></i>
+                        <span>Manage Students</span>
+                    </button>
+                    <button onclick="switchPage('subjects')" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition flex items-center space-x-2">
+                        <i class="fas fa-book"></i>
+                        <span>Manage Subjects</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -294,25 +297,25 @@ function getDashboardContent() {
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statStudents">${studentsCount}</p>
-                    <p class="text-gray-500">STUDENTS</p>
+                    <p class="text-gray-500 text-sm">STUDENTS</p>
                 </div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
-                <div class="bg-green-100 p-4 rounded-full">
-                    <i class="fas fa-book text-green-600 text-2xl"></i>
+                <div class="bg-yellow-100 p-4 rounded-full">
+                    <i class="fas fa-book text-yellow-600 text-2xl"></i>
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statSubjects">${subjectsCount}</p>
-                    <p class="text-gray-500">SUBJECTS</p>
+                    <p class="text-gray-500 text-sm">SUBJECTS</p>
                 </div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
-                <div class="bg-orange-100 p-4 rounded-full">
-                    <i class="fas fa-clipboard-list text-orange-600 text-2xl"></i>
+                <div class="bg-blue-100 p-4 rounded-full">
+                    <i class="fas fa-clipboard-list text-blue-600 text-2xl"></i>
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statEnrollments">${enrollmentsCount}</p>
-                    <p class="text-gray-500">ENROLLMENTS</p>
+                    <p class="text-gray-500 text-sm">ENROLLMENTS</p>
                 </div>
             </div>
             <div class="bg-white rounded-xl p-6 shadow-md flex items-center space-x-4">
@@ -321,7 +324,7 @@ function getDashboardContent() {
                 </div>
                 <div>
                     <p class="text-3xl font-bold text-gray-800" id="statGrades">${gradesCount}</p>
-                    <p class="text-gray-500">GRADES</p>
+                    <p class="text-gray-500 text-sm">GRADES</p>
                 </div>
             </div>
         </div>
@@ -332,29 +335,29 @@ function getDashboardContent() {
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div onclick="switchPage('students')" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-purple-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-user-plus text-purple-600 text-2xl"></i>
+                <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-user-plus text-blue-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">Add Student</h3>
                 <p class="text-gray-500 text-sm">Register new students</p>
             </div>
             <div onclick="switchPage('subjects')" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-red-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-plus-circle text-red-600 text-2xl"></i>
+                <div class="bg-yellow-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-plus-circle text-yellow-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">Add Subject</h3>
                 <p class="text-gray-500 text-sm">Create new subjects</p>
             </div>
             <div onclick="switchPage('enrollments')" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-green-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-user-graduate text-green-600 text-2xl"></i>
+                <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-user-graduate text-blue-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">Enroll Student</h3>
                 <p class="text-gray-500 text-sm">Manage enrollments</p>
             </div>
             <div onclick="switchPage('grades')" class="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition cursor-pointer">
-                <div class="bg-blue-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
-                    <i class="fas fa-edit text-blue-600 text-2xl"></i>
+                <div class="bg-yellow-100 p-4 rounded-full w-16 h-16 flex items-center justify-center mb-4">
+                    <i class="fas fa-edit text-yellow-600 text-2xl"></i>
                 </div>
                 <h3 class="font-semibold text-gray-800">Add Grade</h3>
                 <p class="text-gray-500 text-sm">Enter student grades</p>
@@ -421,7 +424,7 @@ function getSubjectsContent() {
         return `
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-gray-800 flex items-center">
-                    <i class="fas fa-book text-green-500 mr-3"></i>
+                    <i class="fas fa-book text-yellow-500 mr-3"></i>
                     Subjects
                 </h1>
                 <button onclick="openSubjectModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -437,7 +440,7 @@ function getSubjectsContent() {
     return `
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 flex items-center">
-                <i class="fas fa-book text-green-500 mr-3"></i>
+                <i class="fas fa-book text-yellow-500 mr-3"></i>
                 Subjects
             </h1>
             <button onclick="openSubjectModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -488,7 +491,7 @@ function getEnrollmentsContent() {
         return `
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-gray-800 flex items-center">
-                    <i class="fas fa-clipboard-list text-orange-500 mr-3"></i>
+                    <i class="fas fa-clipboard-list text-blue-500 mr-3"></i>
                     Student Enrollments
                 </h1>
                 <button onclick="openEnrollmentModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -504,7 +507,7 @@ function getEnrollmentsContent() {
     return `
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 flex items-center">
-                <i class="fas fa-clipboard-list text-orange-500 mr-3"></i>
+                <i class="fas fa-clipboard-list text-blue-500 mr-3"></i>
                 Student Enrollments
             </h1>
             <button onclick="openEnrollmentModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -562,7 +565,7 @@ function getGradesContent() {
         return `
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-3xl font-bold text-gray-800 flex items-center">
-                    <i class="fas fa-chart-bar text-purple-500 mr-3"></i>
+                    <i class="fas fa-chart-bar text-yellow-500 mr-3"></i>
                     Grades
                 </h1>
                 <button onclick="openGradeModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -578,7 +581,7 @@ function getGradesContent() {
     return `
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-800 flex items-center">
-                <i class="fas fa-chart-bar text-purple-500 mr-3"></i>
+                <i class="fas fa-chart-bar text-yellow-500 mr-3"></i>
                 Grades
             </h1>
             <button onclick="openGradeModal()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
@@ -623,28 +626,28 @@ function render() {
         <header class="bg-blue-900 text-white shadow-lg">
             <div class="container mx-auto px-4 py-4 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <i class="fas fa-graduation-cap text-2xl"></i>
+                    <i class="fas fa-graduation-cap text-yellow-400 text-2xl"></i>
                     <span class="font-bold text-lg">CRT COLLEGE LMS | SJ - Admin</span>
                 </div>
 
                 <nav class="hidden md:flex items-center space-x-6">
-                    <a href="#" onclick="switchPage('dashboard')" class="nav-link flex items-center space-x-2 ${currentPage === 'dashboard' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="dashboard">
+                    <a href="#" onclick="switchPage('dashboard')" class="nav-link flex items-center space-x-2 ${currentPage === 'dashboard' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="dashboard">
                         <i class="fas fa-home"></i>
                         <span>Dashboard</span>
                     </a>
-                    <a href="#" onclick="switchPage('students')" class="nav-link flex items-center space-x-2 ${currentPage === 'students' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="students">
+                    <a href="#" onclick="switchPage('students')" class="nav-link flex items-center space-x-2 ${currentPage === 'students' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="students">
                         <i class="fas fa-users"></i>
                         <span>Students</span>
                     </a>
-                    <a href="#" onclick="switchPage('subjects')" class="nav-link flex items-center space-x-2 ${currentPage === 'subjects' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="subjects">
+                    <a href="#" onclick="switchPage('subjects')" class="nav-link flex items-center space-x-2 ${currentPage === 'subjects' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="subjects">
                         <i class="fas fa-book"></i>
                         <span>Subjects</span>
                     </a>
-                    <a href="#" onclick="switchPage('enrollments')" class="nav-link flex items-center space-x-2 ${currentPage === 'enrollments' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="enrollments">
+                    <a href="#" onclick="switchPage('enrollments')" class="nav-link flex items-center space-x-2 ${currentPage === 'enrollments' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="enrollments">
                         <i class="fas fa-clipboard-list"></i>
                         <span>Enrollments</span>
                     </a>
-                    <a href="#" onclick="switchPage('grades')" class="nav-link flex items-center space-x-2 ${currentPage === 'grades' ? 'bg-blue-700' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="grades">
+                    <a href="#" onclick="switchPage('grades')" class="nav-link flex items-center space-x-2 ${currentPage === 'grades' ? 'bg-yellow-400 text-blue-900' : 'hover:bg-blue-800'} px-4 py-2 rounded-lg transition" data-page="grades">
                         <i class="fas fa-chart-bar"></i>
                         <span>Grades</span>
                     </a>
@@ -656,7 +659,7 @@ function render() {
                     </button>
                     <button class="hover:bg-blue-800 p-2 rounded-lg transition relative">
                         <i class="fas fa-envelope text-xl"></i>
-                        <span class="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        <span class="absolute -top-1 -right-1 bg-yellow-400 text-blue-900 text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">3</span>
                     </button>
                     <button id="profileIcon" onclick="showUserProfile()" class="hover:bg-blue-800 p-2 rounded-lg transition">
                         <i class="fas fa-user-circle text-xl"></i>
@@ -693,33 +696,33 @@ function render() {
                 <form id="subjectForm" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Subject Code</label>
-                        <input type="text" id="subjectCode" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., CS101">
+                        <input type="text" id="subjectCode" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., CS101">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Subject Name</label>
-                        <input type="text" id="subjectName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., Introduction to Computer Science">
+                        <input type="text" id="subjectName" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., Introduction to Computer Science">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Teacher Name</label>
-                        <input type="text" id="subjectTeacher" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="e.g., Dr. John Smith">
+                        <input type="text" id="subjectTeacher" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="e.g., Dr. John Smith">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                        <textarea id="subjectDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" placeholder="Brief description of the subject"></textarea>
+                        <textarea id="subjectDescription" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Brief description of the subject"></textarea>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Cover Photo</label>
-                        <input type="file" id="coverPhotoFile" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <input type="file" id="coverPhotoFile" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <input type="hidden" id="coverPhotoUrl">
                         <div id="coverPhotoPreview" class="mt-2 hidden">
                             <img id="coverPhotoImage" src="" alt="Cover photo preview" class="w-full h-32 object-cover rounded-lg">
                         </div>
                     </div>
                     <div class="flex gap-3">
-                        <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
                             Add Subject
                         </button>
-                        <button type="button" onclick="closeSubjectModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 rounded-lg transition-colors">
+                        <button type="button" onclick="closeSubjectModal()" class="flex-1 bg-yellow-400 hover:bg-yellow-300 text-blue-900 py-2 rounded-lg transition-colors">
                             Cancel
                         </button>
                     </div>
@@ -733,29 +736,29 @@ function render() {
                 <form id="gradeForm" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Student</label>
-                        <select id="gradeStudent" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <select id="gradeStudent" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">Select a student</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                        <select id="gradeSubject" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <select id="gradeSubject" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">Select a subject</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Grade (0-100)</label>
-                        <input type="number" id="gradeValue" min="0" max="100" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <input type="number" id="gradeValue" min="0" max="100" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Remarks</label>
-                        <textarea id="gradeRemarks" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"></textarea>
+                        <textarea id="gradeRemarks" rows="2" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
                     </div>
                     <div class="flex gap-3">
-                        <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
                             Add Grade
                         </button>
-                        <button type="button" onclick="closeGradeModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 rounded-lg transition-colors">
+                        <button type="button" onclick="closeGradeModal()" class="flex-1 bg-yellow-400 hover:bg-yellow-300 text-blue-900 py-2 rounded-lg transition-colors">
                             Cancel
                         </button>
                     </div>
@@ -769,18 +772,18 @@ function render() {
                 <form id="enrollmentForm" class="space-y-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Student</label>
-                        <select id="enrollmentStudent" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <select id="enrollmentStudent" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="">Select a student</option>
                         </select>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Subjects (Select multiple)</label>
-                        <div id="enrollmentSubjects" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent max-h-40 overflow-y-auto">
+                        <div id="enrollmentSubjects" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent max-h-40 overflow-y-auto">
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                        <select id="enrollmentStatus" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                        <select id="enrollmentStatus" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="active">Active</option>
                             <option value="inactive">Inactive</option>
                             <option value="completed">Completed</option>
@@ -788,10 +791,10 @@ function render() {
                         </select>
                     </div>
                     <div class="flex gap-3">
-                        <button type="submit" class="flex-1 bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-colors">
+                        <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors">
                             Enroll Student
                         </button>
-                        <button type="button" onclick="closeEnrollmentModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 rounded-lg transition-colors">
+                        <button type="button" onclick="closeEnrollmentModal()" class="flex-1 bg-yellow-400 hover:bg-yellow-300 text-blue-900 py-2 rounded-lg transition-colors">
                             Cancel
                         </button>
                     </div>
