@@ -46,8 +46,8 @@ function initSteps(formId) {
 
     form.insertAdjacentHTML('beforeend', `
         <div class="flex justify-between mt-6">
-            <button type="button" id="prevBtn" class="inline-flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-md hover:bg-gray-300 transition-opacity duration-200 hover:opacity-90 hidden">Previous</button>
-            <button type="button" id="nextBtn" class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-opacity duration-200 hover:opacity-90 ml-auto">Next</button>
+            <button type="button" id="prevBtn" class="inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-opacity duration-200 hover:opacity-90 hidden">Previous</button>
+            <button type="button" id="nextBtn" class="inline-flex items-center justify-center px-4 py-2 bg-yellow-400 text-blue-900 font-medium rounded-md hover:bg-yellow-300 transition-opacity duration-200 hover:opacity-90 ml-auto">Next</button>
         </div>
     `);
 

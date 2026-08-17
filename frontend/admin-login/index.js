@@ -277,7 +277,7 @@ async function adminLogin(usernameOrEmail, password) {
     }
 }
 
-function adminLogout() {
+export function adminLogout() {
     localStorage.removeItem('admin');
     localStorage.removeItem('adminToken');
     window.location.href = 'AdminLogin.html';

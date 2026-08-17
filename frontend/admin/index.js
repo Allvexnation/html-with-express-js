@@ -7,6 +7,38 @@ Made by Jhon Ladines
 All rights reserved.
 */
 
+const style = document.createElement('style');
+style.textContent = `
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #e2e8f0;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+    }
+`;
+document.head.appendChild(style);
+
 import { getAdmin, adminLogout } from '../admin-login/index.js';
 import { animatePageTransition, animateNavLinks, animateCardHover, animateButtons, animateModalShow, animateModalHide, animateProfileShow, animateProfileHide, refreshAnimations, animateTables, animateTableRowsDomino } from '../admin-animation.js';
 
