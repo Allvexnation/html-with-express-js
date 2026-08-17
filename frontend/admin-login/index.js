@@ -214,7 +214,7 @@ function render() {
                     <button 
                         type="submit"
                         id="loginBtn"
-                        class="inline-flex items-center justify-center w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer"
+                        class="inline-flex items-center justify-center w-full rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-blue-900 transition-colors hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 cursor-pointer"
                     >
                         Login
                     </button>
